@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aiko - Your Ultimate All-In-One Discord Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg, #0d0d0d 0%, #1a1a2e 50%, #16213e 100%);
+      color: #c9d1d9;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 28px 60px;
+    }
+
+    /* ── Banner ── */
+    .banner {
+      text-align: center;
+      margin-bottom: 40px;
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .banner h1 {
+      font-size: 4.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ff6b9d, #c084fc, #60a5fa);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease infinite;
+      filter: drop-shadow(0 0 30px rgba(255, 107, 157, 0.3));
+      letter-spacing: 2px;
+    }
+
+    .banner p {
+      font-size: 1.05rem;
+      color: #8b949e;
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 2px;
+      border: none;
+      background: linear-gradient(90deg, transparent, #ff6b9d, #c084fc, transparent);
+      margin: 36px 0;
+      border-radius: 1px;
+    }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .section:nth-child(1)  { animation-delay: 0.1s; }
+    .section:nth-child(2)  { animation-delay: 0.15s; }
+    .section:nth-child(3)  { animation-delay: 0.2s; }
+    .section:nth-child(4)  { animation-delay: 0.25s; }
+    .section:nth-child(5)  { animation-delay: 0.3s; }
+    .section:nth-child(6)  { animation-delay: 0.35s; }
+    .section:nth-child(7)  { animation-delay: 0.4s; }
+    .section:nth-child(8)  { animation-delay: 0.45s; }
+    .section:nth-child(9)  { animation-delay: 0.5s; }
+    .section:nth-child(10) { animation-delay: 0.55s; }
+    .section:nth-child(11) { animation-delay: 0.6s; }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ff6b9d;
+      border-left: 3px solid #ff6b9d;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, rgba(255, 107, 157, 0.08), transparent);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .section-items {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
+      padding-left: 4px;
+    }
+
+    .item {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 3px 0;
+    }
+
+    .item-name {
+      font-weight: 600;
+      color: #e2e8f0;
+      white-space: nowrap;
+    }
+
+    .item-sep {
+      color: #4a5568;
+    }
+
+    .item-desc {
+      color: #8b949e;
+      font-size: 0.9em;
+    }
+
+    /* ── Callout ── */
+    .callout {
+      border-left: 3px solid #c084fc;
+      background: linear-gradient(90deg, rgba(192, 132, 252, 0.06), transparent);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 40px 0 36px;
+      font-size: 0.98rem;
+      color: #b0b8c1;
+      line-height: 1.8;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out 0.7s forwards;
+    }
+
+    .callout strong {
+      color: #c084fc;
+    }
+
+    /* ── Links ── */
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out 0.8s forwards;
+    }
+
+    .link-btn {
+      display: inline-block;
+      padding: 11px 28px;
+      background: linear-gradient(135deg, #ff6b9d, #c084fc);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      font-family: 'Poppins', sans-serif;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 157, 0.25);
+    }
+
+    .link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(255, 107, 157, 0.4);
+    }
+
+    .link-btn:active {
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .container {
+        padding: 32px 18px 48px;
+      }
+
+      .banner h1 {
+        font-size: 3rem;
+      }
+
+      .banner p {
+        font-size: 0.95rem;
+      }
+
+      .section-items {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .link-btn {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Banner -->
+    <div class="banner">
+      <h1>Aiko</h1>
+      <p>Your Ultimate All-In-One Discord Bot &mdash; Completely Free</p>
+    </div>
+
+    <hr class="divider">
+
+    <div id="features">
+
+      <!-- Customization -->
+      <div class="section">
+        <div class="section-title">&#x1F3A8; Customization</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Custom Prefix</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Set a custom server prefix</span></div>
+          <div class="item"><span class="item-name">Reskin Aiko</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Change avatar, banner &amp; nickname</span></div>
+          <div class="item"><span class="item-name">Welcome Embeds</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Greet members with custom designs</span></div>
+          <div class="item"><span class="item-name">Uwulock / Uwuify</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Turn messages into uwu text</span></div>
+          <div class="item"><span class="item-name">Bump Reminder</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Auto role &amp; tag rewards for bumpers</span></div>
+          <div class="item"><span class="item-name">Music</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Play tracks by name or URL</span></div>
+        </div>
+      </div>
+
+      <!-- Giveaways -->
+      <div class="section">
+        <div class="section-title">&#x1F381; Giveaways</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Create Giveaways</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Start giveaways with one command</span></div>
+          <div class="item"><span class="item-name">Reroll Winners</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Instantly pick a new winner</span></div>
+          <div class="item"><span class="item-name">End Early</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Close any giveaway whenever you want</span></div>
+        </div>
+      </div>
+
+      <!-- Games & Fun -->
+      <div class="section">
+        <div class="section-title">&#x1F3AE; Games &amp; Fun</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Trivia</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Knowledge challenge rounds</span></div>
+          <div class="item"><span class="item-name">Guess the Number</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Number guessing fun</span></div>
+          <div class="item"><span class="item-name">Truth or Dare</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Fun prompts for friends</span></div>
+          <div class="item"><span class="item-name">Rock Paper Scissors</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Quick classic matches</span></div>
+          <div class="item"><span class="item-name">Coinflip</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Flip a virtual coin</span></div>
+          <div class="item"><span class="item-name">Fight</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Battle another user</span></div>
+          <div class="item"><span class="item-name">Juul Hit / Pass / Steal</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Funny social commands</span></div>
+          <div class="item"><span class="item-name">20+ Mini-Games</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Tons of variety for your server</span></div>
+        </div>
+      </div>
+
+      <!-- Booster Perks -->
+      <div class="section">
+        <div class="section-title">&#x1F48E; Booster Perks</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Custom Roles</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Automatic perks for boosters</span></div>
+          <div class="item"><span class="item-name">Role Icon</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Boosters set their own icon</span></div>
+          <div class="item"><span class="item-name">Role Color</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Pick any color you want</span></div>
+          <div class="item"><span class="item-name">Rename Roles</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Customize your role name</span></div>
+        </div>
+      </div>
+
+      <!-- Snipe -->
+      <div class="section">
+        <div class="section-title">&#x1F50D; Snipe</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Message Snipe</span> <span class="item-sep">&mdash;</span> <span class="item-desc">View recently deleted messages</span></div>
+          <div class="item"><span class="item-name">Edit Snipe</span> <span class="item-sep">&mdash;</span> <span class="item-desc">See previous message edits</span></div>
+          <div class="item"><span class="item-name">Reaction Snipe</span> <span class="item-sep">&mdash;</span> <span class="item-desc">View last removed reactions</span></div>
+        </div>
+      </div>
+
+      <!-- Utility & AI -->
+      <div class="section">
+        <div class="section-title">&#x2699;&#xFE0F; Utility &amp; AI</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">ChatGPT</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Built-in AI chat for questions</span></div>
+          <div class="item"><span class="item-name">Auto AI Chat</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Bot randomly talks in chat</span></div>
+          <div class="item"><span class="item-name">Avatar / Userinfo</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Quick detail lookups</span></div>
+          <div class="item"><span class="item-name">AFK System</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Automatic away status</span></div>
+          <div class="item"><span class="item-name">Translation</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Translate any message instantly</span></div>
+          <div class="item"><span class="item-name">Reminders</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Set reminders with ease</span></div>
+          <div class="item"><span class="item-name">Emoji Enlarge</span> <span class="item-sep">&mdash;</span> <span class="item-desc">View emojis in full HD</span></div>
+          <div class="item"><span class="item-name">Dozens More</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Tons of helpful utility tools</span></div>
+        </div>
+      </div>
+
+      <!-- Media Downloads -->
+      <div class="section">
+        <div class="section-title">&#x1F4E5; Media Downloads</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">TikTok / IG / YT</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Save media instantly</span></div>
+          <div class="item"><span class="item-name">Video to GIF</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Convert any video into a GIF</span></div>
+          <div class="item"><span class="item-name">Steal Emojis</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Grab emojis and add to your server</span></div>
+        </div>
+      </div>
+
+      <!-- UwU System -->
+      <div class="section">
+        <div class="section-title">&#x1F338; UwU System</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Uwuify Users</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Convert messages to uwu text</span></div>
+          <div class="item"><span class="item-name">UwU Counter</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Track uwu usage per user</span></div>
+          <div class="item"><span class="item-name">Leaderboards</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Top uwu rankings in the server</span></div>
+        </div>
+      </div>
+
+      <!-- Server Tools -->
+      <div class="section">
+        <div class="section-title">&#x1F6E0;&#xFE0F; Server Tools</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Skullboard</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Highlight the funniest messages</span></div>
+          <div class="item"><span class="item-name">Starboard</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Auto-pin popular starred messages</span></div>
+          <div class="item"><span class="item-name">Sticky Messages</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Keep a message pinned at top</span></div>
+          <div class="item"><span class="item-name">Ping on Join</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Auto-role members when they join</span></div>
+          <div class="item"><span class="item-name">Auto-Responder</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Reply automatically to keywords</span></div>
+          <div class="item"><span class="item-name">Auto-Reaction</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Auto react to chosen words</span></div>
+        </div>
+      </div>
+
+      <!-- Economy -->
+      <div class="section">
+        <div class="section-title">&#x1F4B0; Economy</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Daily / Weekly / Work</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Earn coins through actions</span></div>
+          <div class="item"><span class="item-name">Blackjack &amp; Fishing</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Gamble and grind your way up</span></div>
+          <div class="item"><span class="item-name">Leaderboards</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Show the richest users</span></div>
+          <div class="item"><span class="item-name">GIF Search</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Find GIFs by keyword</span></div>
+          <div class="item"><span class="item-name">Meme Posting</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Get top memes from Reddit</span></div>
+        </div>
+      </div>
+
+      <!-- Last.fm -->
+      <div class="section">
+        <div class="section-title">&#x1F3B5; Last.fm Integration</div>
+        <div class="section-items">
+          <div class="item"><span class="item-name">Now Playing</span> <span class="item-sep">&mdash;</span> <span class="item-desc">View your current track</span></div>
+          <div class="item"><span class="item-name">Autoplay</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Auto-post listening activity</span></div>
+          <div class="item"><span class="item-name">Custom Mode</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Customize autoplay &amp; NP embeds</span></div>
+          <div class="item"><span class="item-name">Top Artists</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Most listened artists</span></div>
+          <div class="item"><span class="item-name">Play Count</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Total plays on any track</span></div>
+          <div class="item"><span class="item-name">Stats</span> <span class="item-sep">&mdash;</span> <span class="item-desc">Full profile &amp; scrobble count</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Callout -->
+    <div class="callout">
+      <strong>Aiko</strong> is completely free with tons more features to explore. Add it to your server today and see for yourself.
+    </div>
+
+    <hr class="divider">
+
+    <!-- Links -->
+    <div class="links">
+      <a href="https://aikoapp.site/commands" target="_blank" rel="noopener" class="link-btn">View All Commands</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875" target="_blank" rel="noopener" class="link-btn">Invite Aiko</a>
+      <a href="https://discord.gg/hghJ3u5mSX" target="_blank" rel="noopener" class="link-btn">Support Server</a>
+    </div>
+
+  </div>
+</body>
+</html>
