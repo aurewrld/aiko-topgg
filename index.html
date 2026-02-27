@@ -25,6 +25,24 @@
       --border: rgba(139, 92, 246, 0.12);
     }
 
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(139, 92, 246, 0.3);
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 92, 246, 0.5);
+    }
+    html {
+      scrollbar-color: rgba(139, 92, 246, 0.3) #0a0a0f;
+      scrollbar-width: thin;
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -34,7 +52,6 @@
       overflow-x: hidden;
     }
 
-    /* ── Animated background ── */
     .bg-grid {
       position: fixed;
       inset: 0;
@@ -76,7 +93,6 @@
       50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
     }
 
-    /* ── Floating orbs ── */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -118,7 +134,6 @@
       padding: 50px 24px 64px;
     }
 
-    /* ── Banner ── */
     .banner {
       text-align: center;
       padding: 40px 0 20px;
@@ -165,7 +180,6 @@
       50% { background-position: 100% 50%; }
     }
 
-    /* ── Stats bar ── */
     .stats {
       display: flex;
       justify-content: center;
@@ -205,7 +219,6 @@
       margin-top: 2px;
     }
 
-    /* ── Divider ── */
     .divider {
       height: 1px;
       border: none;
@@ -214,7 +227,6 @@
       opacity: 0.3;
     }
 
-    /* ── Section cards ── */
     .section {
       margin-bottom: 24px;
       background: var(--bg-card);
@@ -277,7 +289,6 @@
       line-height: 1.6;
     }
 
-    /* ── Command grid ── */
     .cmd-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -314,7 +325,6 @@
       font-size: 0.8rem;
     }
 
-    /* ── Command tag pills ── */
     .cmd-tags {
       display: flex;
       flex-wrap: wrap;
@@ -335,7 +345,6 @@
       font-family: 'Poppins', monospace;
     }
 
-    /* ── Roleplay compact ── */
     .rp-grid {
       display: flex;
       flex-wrap: wrap;
@@ -359,7 +368,6 @@
       color: var(--purple-light);
     }
 
-    /* ── Callout ── */
     .callout {
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
       border: 1px solid var(--border);
@@ -392,7 +400,6 @@
       line-height: 1.7;
     }
 
-    /* ── Links ── */
     .links {
       display: flex;
       justify-content: center;
@@ -462,7 +469,6 @@
       box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
     }
 
-    /* ── Footer ── */
     .footer {
       text-align: center;
       margin-top: 48px;
@@ -472,7 +478,6 @@
       font-size: 0.75rem;
     }
 
-    /* ── Reveal delay stagger ── */
     .section:nth-child(1)  { transition-delay: 0s; }
     .section:nth-child(2)  { transition-delay: 0.05s; }
     .section:nth-child(3)  { transition-delay: 0.1s; }
@@ -487,7 +492,6 @@
     .section:nth-child(12) { transition-delay: 0.55s; }
     .section:nth-child(13) { transition-delay: 0.6s; }
 
-    /* ── Responsive ── */
     @media (max-width: 640px) {
       .container { padding: 32px 16px 48px; }
       .banner h1 { font-size: 3.2rem; }
@@ -513,14 +517,12 @@
 
   <div class="container">
 
-    <!-- ═══ Banner ═══ -->
     <div class="banner">
       <h1>Aiko</h1>
-      <p class="subtitle">Your Ultimate All-In-One Discord Bot - Completely Free</p>
+      <p class="subtitle">Your Ultimate All-In-One Discord Bot &mdash; Completely Free</p>
       <span class="tagline">334+ Commands &bull; 99.9% Uptime &bull; Zero Cost</span>
     </div>
 
-    <!-- ═══ Stats ═══ -->
     <div class="stats">
       <div class="stat">
         <span class="stat-num">340K+</span>
@@ -542,7 +544,6 @@
 
     <hr class="divider">
 
-    <!-- ═══ Moderation ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F6E1;</span> Moderation</div>
@@ -569,7 +570,6 @@
       </div>
     </div>
 
-    <!-- ═══ Economy ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1FA99;</span> Economy</div>
@@ -606,7 +606,6 @@
       </div>
     </div>
 
-    <!-- ═══ Games & Fun ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F3AE;</span> Games &amp; Fun</div>
@@ -650,13 +649,12 @@
       </div>
     </div>
 
-    <!-- ═══ Utility & Tools ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F527;</span> Utility &amp; Tools</div>
         <span class="cmd-count">34 commands</span>
       </div>
-      <p class="section-desc">Essential everyday tools - snipe deleted messages, download media, translate text, search YouTube, check weather, and much more.</p>
+      <p class="section-desc">Essential everyday tools — snipe deleted messages, download media, translate text, search YouTube, check weather, and much more.</p>
       <div class="cmd-grid">
         <div class="cmd"><span class="cmd-name">snipe</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View deleted messages</span></div>
         <div class="cmd"><span class="cmd-name">editsnipe</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View edited messages</span></div>
@@ -692,13 +690,12 @@
       </div>
     </div>
 
-    <!-- ═══ Server Setup ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x2699;&#xFE0F;</span> Server Setup</div>
         <span class="cmd-count">86 commands</span>
       </div>
-      <p class="section-desc">Fully customize your server - welcome messages, goodbye messages, boost embeds, leveling system, button roles, tag rewards, and more.</p>
+      <p class="section-desc">Fully customize your server — welcome messages, goodbye messages, boost embeds, leveling system, button roles, tag rewards, and more.</p>
       <div class="cmd-grid">
         <div class="cmd"><span class="cmd-name">welcome setup</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Custom welcome embeds</span></div>
         <div class="cmd"><span class="cmd-name">goodbye setup</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Custom goodbye messages</span></div>
@@ -729,7 +726,6 @@
       </div>
     </div>
 
-    <!-- ═══ AI & Chat ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F916;</span> AI &amp; Chat</div>
@@ -764,7 +760,6 @@
       </div>
     </div>
 
-    <!-- ═══ Roleplay ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F496;</span> Roleplay</div>
@@ -837,7 +832,6 @@
       </div>
     </div>
 
-    <!-- ═══ Last.fm ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F3B5;</span> Last.fm Integration</div>
@@ -862,7 +856,6 @@
       </div>
     </div>
 
-    <!-- ═══ Giveaways ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F381;</span> Giveaways</div>
@@ -877,7 +870,6 @@
       </div>
     </div>
 
-    <!-- ═══ VoiceMaster ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F50A;</span> VoiceMaster</div>
@@ -892,7 +884,6 @@
       </div>
     </div>
 
-    <!-- ═══ Bump Reminder ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F514;</span> Bump Reminder</div>
@@ -915,7 +906,6 @@
       </div>
     </div>
 
-    <!-- ═══ Info & Lookup ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F4CB;</span> Info &amp; Lookup</div>
@@ -944,7 +934,6 @@
       </div>
     </div>
 
-    <!-- ═══ Booster Perks ═══ -->
     <div class="section" data-reveal>
       <div class="section-header">
         <div class="section-title"><span class="section-icon">&#x1F48E;</span> Booster Perks</div>
@@ -952,21 +941,19 @@
       </div>
       <p class="section-desc">Reward your server boosters with personal custom roles. Boosters can change their role name, color, and icon freely.</p>
       <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">boosterplugin enable</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Enable booster roles</span></div>
+        <div class="cmd"><span class="cmd-name">enableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Enable booster roles</span></div>
         <div class="cmd"><span class="cmd-name">booster</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Create &amp; customize your role</span></div>
-        <div class="cmd"><span class="cmd-name">boosterplugin disable</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Disable booster plugin</span></div>
+        <div class="cmd"><span class="cmd-name">disableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Disable booster plugin</span></div>
       </div>
     </div>
 
-    <!-- ═══ Callout ═══ -->
     <div class="callout" data-reveal>
       <div class="callout-title">Why Aiko?</div>
-      <p class="callout-text">334+ commands, zero paywalls, and constant updates. Aiko gives your server everything it needs - moderation, economy, games, music tracking, AI chat, and way more - all completely free. No premium tiers, no locked features. Just add and go.</p>
+      <p class="callout-text">334+ commands, zero paywalls, and constant updates. Aiko gives your server everything it needs — moderation, economy, games, music tracking, AI chat, and way more — all completely free. No premium tiers, no locked features. Just add and go.</p>
     </div>
 
     <hr class="divider">
 
-    <!-- ═══ Links ═══ -->
     <div class="links" data-reveal>
       <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875" target="_blank" rel="noopener" class="link-btn">Add to Discord</a>
       <a href="https://aiko.best/commands" target="_blank" rel="noopener" class="link-btn-outline link-btn">All Commands</a>
@@ -981,7 +968,6 @@
   </div>
 
   <script>
-    // Scroll reveal
     (function() {
       var els = document.querySelectorAll('[data-reveal]');
       var observer = new IntersectionObserver(function(entries) {
