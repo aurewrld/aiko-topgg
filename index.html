@@ -6,124 +6,49 @@
   <title>Aiko - Your Ultimate All-In-One Discord Bot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --bg: #000000;
       --bg-card: #0a0a0f;
-      --bg-card-hover: #0f0f18;
-      --purple: #8b5cf6;
-      --purple-light: #a78bfa;
-      --purple-dark: #7c3aed;
-      --purple-glow: rgba(139, 92, 246, 0.4);
-      --purple-subtle: rgba(139, 92, 246, 0.08);
       --text: #e4e4e7;
       --text-muted: #71717a;
       --text-dim: #52525b;
-      --border: rgba(139, 92, 246, 0.12);
+      --accent: #814ac8;
+      --accent-light: #df7afe;
+      --gradient: linear-gradient(135deg, #814ac8, #df7afe);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-accent: rgba(129, 74, 200, 0.12);
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0a0a0f;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(139, 92, 246, 0.3);
-      border-radius: 8px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(139, 92, 246, 0.5);
-    }
-    html {
-      scrollbar-color: rgba(139, 92, 246, 0.3) #0a0a0f;
-      scrollbar-width: thin;
-    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #050508; }
+    ::-webkit-scrollbar-thumb { background: rgba(129, 74, 200, 0.3); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(129, 74, 200, 0.5); }
+    html { scrollbar-color: rgba(129, 74, 200, 0.3) #050508; scrollbar-width: thin; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-size: 14px;
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image:
-        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 100%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 100%);
-    }
+    ::selection { background: rgba(129, 74, 200, 0.3); color: #fff; }
 
     .bg-glow {
       position: fixed;
       top: -200px;
       left: 50%;
       transform: translateX(-50%);
-      width: 800px;
+      width: 700px;
       height: 500px;
-      background: radial-gradient(ellipse, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(129, 74, 200, 0.1) 0%, transparent 70%);
       z-index: 0;
-      animation: glowPulse 6s ease-in-out infinite;
-    }
-
-    .bg-glow-2 {
-      position: fixed;
-      bottom: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
-      z-index: 0;
-      animation: glowPulse 8s ease-in-out 3s infinite;
-    }
-
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
-      50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      z-index: 0;
-      animation: orbFloat 20s ease-in-out infinite;
-    }
-    .orb-1 {
-      width: 300px; height: 300px;
-      background: rgba(139, 92, 246, 0.08);
-      top: 10%; left: -5%;
-      animation-delay: 0s;
-    }
-    .orb-2 {
-      width: 200px; height: 200px;
-      background: rgba(167, 139, 250, 0.06);
-      top: 40%; right: -5%;
-      animation-delay: -7s;
-    }
-    .orb-3 {
-      width: 250px; height: 250px;
-      background: rgba(124, 58, 237, 0.07);
-      bottom: 20%; left: 10%;
-      animation-delay: -14s;
-    }
-
-    @keyframes orbFloat {
-      0%, 100% { transform: translate(0, 0); }
-      25% { transform: translate(30px, -20px); }
-      50% { transform: translate(-20px, 30px); }
-      75% { transform: translate(20px, 20px); }
     }
 
     .container {
@@ -141,15 +66,14 @@
 
     .banner h1 {
       font-size: 5rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #a78bfa, #8b5cf6, #c4b5fd, #7c3aed);
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 0%, #888888 25%, #ffffff 50%, #888888 75%, #ffffff 100%);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: titleShift 5s ease infinite;
-      filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.4));
-      letter-spacing: 4px;
+      animation: titleShift 10s linear infinite;
+      letter-spacing: 2px;
       line-height: 1.1;
     }
 
@@ -157,78 +81,162 @@
       font-size: 1.1rem;
       color: var(--text-muted);
       margin-top: 12px;
-      font-weight: 300;
-      letter-spacing: 0.5px;
+      font-weight: 400;
     }
 
     .banner .tagline {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       margin-top: 16px;
-      padding: 6px 20px;
-      background: var(--purple-subtle);
-      border: 1px solid var(--border);
+      padding: 6px 18px;
+      background: rgba(129, 74, 200, 0.08);
+      border: 1px solid var(--border-accent);
       border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--purple-light);
-      letter-spacing: 1.5px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent-light);
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
     @keyframes titleShift {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .nav-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 28px 0 8px;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .nav-btn--primary {
+      background: var(--gradient);
+      color: #fff;
+      border: none;
+    }
+    .nav-btn--primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(129, 74, 200, 0.3);
+    }
+
+    .nav-btn--outline {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--border);
+    }
+    .nav-btn--outline:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      transform: translateY(-2px);
+    }
+    .nav-btn--blue {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+    .nav-btn--blue:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.35);
+      color: #93bbfd;
+      transform: translateY(-2px);
+    }
+    .nav-btn--green {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+    }
+    .nav-btn--green:hover {
+      background: rgba(34, 197, 94, 0.15);
+      border-color: rgba(34, 197, 94, 0.35);
+      color: #86efac;
+      transform: translateY(-2px);
+    }
+    .nav-btn--cyan {
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      color: #22d3ee;
+    }
+    .nav-btn--cyan:hover {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: rgba(6, 182, 212, 0.35);
+      color: #67e8f9;
+      transform: translateY(-2px);
     }
 
     .stats {
       display: flex;
       justify-content: center;
-      gap: 32px;
-      margin: 36px 0 16px;
+      gap: 16px;
+      margin: 32px 0 16px;
       flex-wrap: wrap;
     }
 
     .stat {
       text-align: center;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.06), rgba(139, 92, 246, 0.02));
+      padding: 14px 22px;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      min-width: 130px;
+      border-radius: 14px;
+      min-width: 120px;
       transition: transform 0.3s ease, border-color 0.3s ease;
     }
 
     .stat:hover {
-      transform: translateY(-3px);
-      border-color: rgba(139, 92, 246, 0.3);
+      transform: translateY(-2px);
+      border-color: rgba(129, 74, 200, 0.2);
     }
 
     .stat-num {
       display: block;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--purple-light);
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       line-height: 1.2;
     }
 
     .stat-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.08em;
+      font-weight: 600;
       margin-top: 2px;
     }
 
     .divider {
       height: 1px;
       border: none;
-      background: linear-gradient(90deg, transparent 0%, var(--purple) 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.2), transparent);
       margin: 40px 0;
-      opacity: 0.3;
     }
 
     .section {
-      margin-bottom: 24px;
+      position: relative;
+      margin-bottom: 16px;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
@@ -236,6 +244,16 @@
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       opacity: 0;
       transform: translateY(30px);
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 50%;
+      height: 40%;
+      background: radial-gradient(ellipse at 0% 0%, rgba(255,255,255,0.025) 0%, transparent 70%);
+      pointer-events: none;
     }
 
     .section.visible {
@@ -245,54 +263,52 @@
     }
 
     .section:hover {
-      border-color: rgba(139, 92, 246, 0.25);
-      box-shadow: 0 8px 40px rgba(139, 92, 246, 0.08);
+      border-color: rgba(129, 74, 200, 0.15);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
     }
 
     .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .section-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--purple-light);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .section-icon {
-      font-size: 1.3rem;
-    }
+    .section-icon { font-size: 1.2rem; }
 
     .cmd-count {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--purple);
-      background: var(--purple-subtle);
-      border: 1px solid var(--border);
-      padding: 3px 10px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      background: rgba(129, 74, 200, 0.08);
+      border: 1px solid var(--border-accent);
+      padding: 4px 12px;
       border-radius: 50px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      white-space: nowrap;
     }
 
     .section-desc {
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       margin-bottom: 16px;
-      line-height: 1.6;
+      line-height: 1.65;
     }
 
     .cmd-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6px;
+      gap: 4px;
     }
 
     .cmd {
@@ -304,26 +320,18 @@
       transition: background 0.2s ease;
     }
 
-    .cmd:hover {
-      background: rgba(139, 92, 246, 0.05);
-    }
+    .cmd:hover { background: rgba(129, 74, 200, 0.04); }
 
     .cmd-name {
       font-weight: 600;
       color: #d4d4d8;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       white-space: nowrap;
     }
 
-    .cmd-dot {
-      color: var(--purple);
-      font-size: 0.6rem;
-    }
+    .cmd-dot { color: var(--accent); font-size: 0.6rem; }
 
-    .cmd-desc {
-      color: var(--text-dim);
-      font-size: 0.8rem;
-    }
+    .cmd-desc { color: var(--text-dim); font-size: 0.78rem; }
 
     .cmd-tags {
       display: flex;
@@ -331,18 +339,17 @@
       gap: 6px;
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid rgba(139, 92, 246, 0.06);
+      border-top: 1px solid var(--border);
     }
 
     .cmd-tag {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 500;
       color: var(--text-dim);
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
       padding: 3px 10px;
       border-radius: 6px;
-      font-family: 'Poppins', monospace;
     }
 
     .rp-grid {
@@ -352,31 +359,41 @@
     }
 
     .rp-tag {
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 500;
       color: var(--text-muted);
-      background: rgba(139, 92, 246, 0.04);
-      border: 1px solid rgba(139, 92, 246, 0.08);
+      background: rgba(129, 74, 200, 0.04);
+      border: 1px solid rgba(129, 74, 200, 0.08);
       padding: 4px 12px;
       border-radius: 8px;
       transition: all 0.2s ease;
     }
 
     .rp-tag:hover {
-      background: rgba(139, 92, 246, 0.1);
-      border-color: rgba(139, 92, 246, 0.2);
-      color: var(--purple-light);
+      background: rgba(129, 74, 200, 0.1);
+      border-color: rgba(129, 74, 200, 0.2);
+      color: var(--accent-light);
     }
 
     .callout {
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(139, 92, 246, 0.02));
+      position: relative;
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px 28px;
+      padding: 32px;
       margin: 40px 0;
       text-align: center;
+      overflow: hidden;
       opacity: 0;
       transform: translateY(20px);
+    }
+
+    .callout::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.2), transparent);
     }
 
     .callout.visible {
@@ -387,23 +404,26 @@
 
     .callout-title {
       font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--purple-light);
-      margin-bottom: 8px;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
     }
 
     .callout-text {
       color: var(--text-muted);
-      font-size: 0.92rem;
-      max-width: 550px;
+      font-size: 0.9rem;
+      max-width: 580px;
       margin: 0 auto;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     .links {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       margin-top: 32px;
       opacity: 0;
@@ -421,59 +441,41 @@
       align-items: center;
       gap: 8px;
       padding: 12px 28px;
-      background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+      background: var(--gradient);
       color: #fff;
       text-decoration: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 0.88rem;
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .link-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.86rem;
+      font-family: 'Figtree', sans-serif;
+      transition: all 0.25s ease;
     }
 
     .link-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.45);
-    }
-
-    .link-btn:hover::before {
-      opacity: 1;
-    }
-
-    .link-btn:active {
-      transform: translateY(0);
+      transform: translateY(-2px);
+      opacity: 0.9;
+      box-shadow: 0 6px 24px rgba(129, 74, 200, 0.3);
     }
 
     .link-btn-outline {
       background: transparent;
       border: 1px solid var(--border);
-      box-shadow: none;
-      color: var(--purple-light);
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .link-btn-outline:hover {
-      background: var(--purple-subtle);
-      border-color: rgba(139, 92, 246, 0.3);
-      box-shadow: 0 4px 20px rgba(139, 92, 246, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      box-shadow: none;
+      opacity: 1;
     }
 
     .footer {
       text-align: center;
       margin-top: 48px;
       padding-top: 24px;
-      border-top: 1px solid rgba(139, 92, 246, 0.06);
+      border-top: 1px solid var(--border);
       color: var(--text-dim);
       font-size: 0.75rem;
     }
@@ -496,31 +498,47 @@
       .container { padding: 32px 16px 48px; }
       .banner h1 { font-size: 3.2rem; }
       .banner .subtitle { font-size: 0.95rem; }
-      .stats { gap: 12px; }
-      .stat { min-width: 100px; padding: 12px 16px; }
-      .stat-num { font-size: 1.4rem; }
+      .stats { gap: 10px; }
+      .stat { min-width: 90px; padding: 12px 14px; }
+      .stat-num { font-size: 1.3rem; }
       .cmd-grid { grid-template-columns: 1fr; }
       .section { padding: 18px; }
       .links { flex-direction: column; align-items: center; }
       .link-btn, .link-btn-outline { width: 100%; max-width: 300px; justify-content: center; }
+      .nav-btns { flex-direction: column; align-items: center; }
+      .nav-btn { width: 100%; max-width: 280px; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
   <div class="bg-glow"></div>
-  <div class="bg-glow-2"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
 
   <div class="container">
 
     <div class="banner">
       <h1>Aiko</h1>
-      <p class="subtitle">Your Ultimate All-In-One Discord Bot - Completely Free</p>
-      <span class="tagline">334+ Commands &bull; 99.9% Uptime &bull; Zero Cost</span>
+      <p class="subtitle">A powerful all-in-one Discord bot - completely free</p>
+      <span class="tagline">440+ Commands &bull; 99.9% Uptime &bull; Zero Cost</span>
+    </div>
+
+    <div class="nav-btns">
+      <a href="https://aiko.best" target="_blank" rel="noopener" class="nav-btn nav-btn--primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Website
+      </a>
+      <a href="https://aiko.best/dashboard" target="_blank" rel="noopener" class="nav-btn nav-btn--blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a href="https://discord.gg/2Jb6bNFcvz" target="_blank" rel="noopener" class="nav-btn nav-btn--green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Support
+      </a>
+      <a href="https://aiko.best/commands" target="_blank" rel="noopener" class="nav-btn nav-btn--cyan">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        Commands
+      </a>
     </div>
 
     <div class="stats">
@@ -533,7 +551,7 @@
         <span class="stat-label">Servers</span>
       </div>
       <div class="stat">
-        <span class="stat-num">334+</span>
+        <span class="stat-num">440+</span>
         <span class="stat-label">Commands</span>
       </div>
       <div class="stat">
@@ -623,29 +641,7 @@
         <div class="cmd"><span class="cmd-name">meme</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Random memes from Reddit</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">rate</span>
-        <span class="cmd-tag">iq</span>
-        <span class="cmd-tag">rizz</span>
-        <span class="cmd-tag">simp</span>
-        <span class="cmd-tag">drip</span>
-        <span class="cmd-tag">aura</span>
-        <span class="cmd-tag">ppsize</span>
-        <span class="cmd-tag">howgay</span>
-        <span class="cmd-tag">8ball</span>
-        <span class="cmd-tag">joke</span>
-        <span class="cmd-tag">juul</span>
-        <span class="cmd-tag">gif</span>
-        <span class="cmd-tag">fakeban</span>
-        <span class="cmd-tag">poll</span>
-        <span class="cmd-tag">cat</span>
-        <span class="cmd-tag">dog</span>
-        <span class="cmd-tag">roast</span>
-        <span class="cmd-tag">compliment</span>
-        <span class="cmd-tag">candy</span>
-        <span class="cmd-tag">cake</span>
-        <span class="cmd-tag">pizza</span>
-        <span class="cmd-tag">roll</span>
-        <span class="cmd-tag">nword</span>
+        <span class="cmd-tag">rate</span> <span class="cmd-tag">iq</span> <span class="cmd-tag">rizz</span> <span class="cmd-tag">simp</span> <span class="cmd-tag">drip</span> <span class="cmd-tag">aura</span> <span class="cmd-tag">ppsize</span> <span class="cmd-tag">howgay</span> <span class="cmd-tag">8ball</span> <span class="cmd-tag">joke</span> <span class="cmd-tag">juul</span> <span class="cmd-tag">gif</span> <span class="cmd-tag">fakeban</span> <span class="cmd-tag">poll</span> <span class="cmd-tag">cat</span> <span class="cmd-tag">dog</span> <span class="cmd-tag">roast</span> <span class="cmd-tag">compliment</span> <span class="cmd-tag">candy</span> <span class="cmd-tag">cake</span> <span class="cmd-tag">pizza</span> <span class="cmd-tag">roll</span> <span class="cmd-tag">nword</span>
       </div>
     </div>
 
@@ -666,27 +662,7 @@
         <div class="cmd"><span class="cmd-name">youtube</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Search YouTube videos</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">reactionsnipe</span>
-        <span class="cmd-tag">embed</span>
-        <span class="cmd-tag">texttospeech</span>
-        <span class="cmd-tag">makemp3</span>
-        <span class="cmd-tag">calculator</span>
-        <span class="cmd-tag">crypto</span>
-        <span class="cmd-tag">movie</span>
-        <span class="cmd-tag">instagram</span>
-        <span class="cmd-tag">tiktok</span>
-        <span class="cmd-tag">steam</span>
-        <span class="cmd-tag">roblox</span>
-        <span class="cmd-tag">tweet</span>
-        <span class="cmd-tag">quote</span>
-        <span class="cmd-tag">googleimage</span>
-        <span class="cmd-tag">urbandictionary</span>
-        <span class="cmd-tag">hex</span>
-        <span class="cmd-tag">lookup</span>
-        <span class="cmd-tag">media</span>
-        <span class="cmd-tag">say</span>
-        <span class="cmd-tag">time</span>
-        <span class="cmd-tag">topcommands</span>
+        <span class="cmd-tag">reactionsnipe</span> <span class="cmd-tag">embed</span> <span class="cmd-tag">texttospeech</span> <span class="cmd-tag">makemp3</span> <span class="cmd-tag">calculator</span> <span class="cmd-tag">crypto</span> <span class="cmd-tag">movie</span> <span class="cmd-tag">instagram</span> <span class="cmd-tag">tiktok</span> <span class="cmd-tag">steam</span> <span class="cmd-tag">roblox</span> <span class="cmd-tag">tweet</span> <span class="cmd-tag">quote</span> <span class="cmd-tag">googleimage</span> <span class="cmd-tag">urbandictionary</span> <span class="cmd-tag">hex</span> <span class="cmd-tag">lookup</span> <span class="cmd-tag">media</span> <span class="cmd-tag">say</span> <span class="cmd-tag">time</span> <span class="cmd-tag">topcommands</span>
       </div>
     </div>
 
@@ -707,22 +683,7 @@
         <div class="cmd"><span class="cmd-name">sticky</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Pin messages to channel top</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">setprefix</span>
-        <span class="cmd-tag">customize</span>
-        <span class="cmd-tag">webhook</span>
-        <span class="cmd-tag">pingonjoin</span>
-        <span class="cmd-tag">reactionchannel</span>
-        <span class="cmd-tag">role</span>
-        <span class="cmd-tag">hide</span>
-        <span class="cmd-tag">topic</span>
-        <span class="cmd-tag">nickname</span>
-        <span class="cmd-tag">sticker</span>
-        <span class="cmd-tag">steal</span>
-        <span class="cmd-tag">safetycheck</span>
-        <span class="cmd-tag">tagreward</span>
-        <span class="cmd-tag">levels rewards</span>
-        <span class="cmd-tag">levels leaderboard</span>
-        <span class="cmd-tag">booster</span>
+        <span class="cmd-tag">setprefix</span> <span class="cmd-tag">customize</span> <span class="cmd-tag">webhook</span> <span class="cmd-tag">pingonjoin</span> <span class="cmd-tag">reactionchannel</span> <span class="cmd-tag">role</span> <span class="cmd-tag">hide</span> <span class="cmd-tag">topic</span> <span class="cmd-tag">nickname</span> <span class="cmd-tag">sticker</span> <span class="cmd-tag">steal</span> <span class="cmd-tag">safetycheck</span> <span class="cmd-tag">tagreward</span> <span class="cmd-tag">levels rewards</span> <span class="cmd-tag">levels leaderboard</span> <span class="cmd-tag">booster</span>
       </div>
     </div>
 
@@ -743,20 +704,7 @@
         <div class="cmd"><span class="cmd-name">birthday</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Track server birthdays</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">setaichannel</span>
-        <span class="cmd-tag">uwulock</span>
-        <span class="cmd-tag">uwu</span>
-        <span class="cmd-tag">uwuleaderboard</span>
-        <span class="cmd-tag">imageonly</span>
-        <span class="cmd-tag">clockin</span>
-        <span class="cmd-tag">clockout</span>
-        <span class="cmd-tag">dailyquote</span>
-        <span class="cmd-tag">addemoji</span>
-        <span class="cmd-tag">jail</span>
-        <span class="cmd-tag">fakenitro</span>
-        <span class="cmd-tag">quest</span>
-        <span class="cmd-tag">questsnotify</span>
-        <span class="cmd-tag">botclear</span>
+        <span class="cmd-tag">setaichannel</span> <span class="cmd-tag">uwulock</span> <span class="cmd-tag">uwu</span> <span class="cmd-tag">uwuleaderboard</span> <span class="cmd-tag">imageonly</span> <span class="cmd-tag">clockin</span> <span class="cmd-tag">clockout</span> <span class="cmd-tag">dailyquote</span> <span class="cmd-tag">addemoji</span> <span class="cmd-tag">jail</span> <span class="cmd-tag">fakenitro</span> <span class="cmd-tag">quest</span> <span class="cmd-tag">questsnotify</span> <span class="cmd-tag">botclear</span>
       </div>
     </div>
 
@@ -767,68 +715,7 @@
       </div>
       <p class="section-desc">75+ anime GIF interaction commands. Express yourself with hugs, kisses, pats, slaps, and dozens more actions.</p>
       <div class="rp-grid">
-        <span class="rp-tag">hug</span>
-        <span class="rp-tag">kiss</span>
-        <span class="rp-tag">pat</span>
-        <span class="rp-tag">cuddle</span>
-        <span class="rp-tag">slap</span>
-        <span class="rp-tag">bite</span>
-        <span class="rp-tag">bonk</span>
-        <span class="rp-tag">punch</span>
-        <span class="rp-tag">tickle</span>
-        <span class="rp-tag">poke</span>
-        <span class="rp-tag">wave</span>
-        <span class="rp-tag">wink</span>
-        <span class="rp-tag">cry</span>
-        <span class="rp-tag">dance</span>
-        <span class="rp-tag">blush</span>
-        <span class="rp-tag">lick</span>
-        <span class="rp-tag">love</span>
-        <span class="rp-tag">nuzzle</span>
-        <span class="rp-tag">highfive</span>
-        <span class="rp-tag">handhold</span>
-        <span class="rp-tag">feed</span>
-        <span class="rp-tag">happy</span>
-        <span class="rp-tag">laugh</span>
-        <span class="rp-tag">nom</span>
-        <span class="rp-tag">yeet</span>
-        <span class="rp-tag">smug</span>
-        <span class="rp-tag">stare</span>
-        <span class="rp-tag">think</span>
-        <span class="rp-tag">run</span>
-        <span class="rp-tag">sleep</span>
-        <span class="rp-tag">smile</span>
-        <span class="rp-tag">pout</span>
-        <span class="rp-tag">shrug</span>
-        <span class="rp-tag">nod</span>
-        <span class="rp-tag">baka</span>
-        <span class="rp-tag">cookie</span>
-        <span class="rp-tag">facepalm</span>
-        <span class="rp-tag">thumbsup</span>
-        <span class="rp-tag">yawn</span>
-        <span class="rp-tag">airkiss</span>
-        <span class="rp-tag">brofist</span>
-        <span class="rp-tag">celebrate</span>
-        <span class="rp-tag">cheers</span>
-        <span class="rp-tag">clap</span>
-        <span class="rp-tag">confused</span>
-        <span class="rp-tag">evillaugh</span>
-        <span class="rp-tag">headbang</span>
-        <span class="rp-tag">mad</span>
-        <span class="rp-tag">nervous</span>
-        <span class="rp-tag">peek</span>
-        <span class="rp-tag">sad</span>
-        <span class="rp-tag">scared</span>
-        <span class="rp-tag">shy</span>
-        <span class="rp-tag">sigh</span>
-        <span class="rp-tag">sing</span>
-        <span class="rp-tag">sip</span>
-        <span class="rp-tag">sneeze</span>
-        <span class="rp-tag">sorry</span>
-        <span class="rp-tag">surprised</span>
-        <span class="rp-tag">tired</span>
-        <span class="rp-tag">yay</span>
-        <span class="rp-tag">+ more</span>
+        <span class="rp-tag">hug</span> <span class="rp-tag">kiss</span> <span class="rp-tag">pat</span> <span class="rp-tag">cuddle</span> <span class="rp-tag">slap</span> <span class="rp-tag">bite</span> <span class="rp-tag">bonk</span> <span class="rp-tag">punch</span> <span class="rp-tag">tickle</span> <span class="rp-tag">poke</span> <span class="rp-tag">wave</span> <span class="rp-tag">wink</span> <span class="rp-tag">cry</span> <span class="rp-tag">dance</span> <span class="rp-tag">blush</span> <span class="rp-tag">lick</span> <span class="rp-tag">love</span> <span class="rp-tag">nuzzle</span> <span class="rp-tag">highfive</span> <span class="rp-tag">handhold</span> <span class="rp-tag">feed</span> <span class="rp-tag">happy</span> <span class="rp-tag">laugh</span> <span class="rp-tag">nom</span> <span class="rp-tag">yeet</span> <span class="rp-tag">smug</span> <span class="rp-tag">stare</span> <span class="rp-tag">think</span> <span class="rp-tag">run</span> <span class="rp-tag">sleep</span> <span class="rp-tag">smile</span> <span class="rp-tag">pout</span> <span class="rp-tag">shrug</span> <span class="rp-tag">nod</span> <span class="rp-tag">baka</span> <span class="rp-tag">cookie</span> <span class="rp-tag">facepalm</span> <span class="rp-tag">thumbsup</span> <span class="rp-tag">yawn</span> <span class="rp-tag">airkiss</span> <span class="rp-tag">brofist</span> <span class="rp-tag">celebrate</span> <span class="rp-tag">cheers</span> <span class="rp-tag">clap</span> <span class="rp-tag">confused</span> <span class="rp-tag">evillaugh</span> <span class="rp-tag">headbang</span> <span class="rp-tag">mad</span> <span class="rp-tag">nervous</span> <span class="rp-tag">peek</span> <span class="rp-tag">sad</span> <span class="rp-tag">scared</span> <span class="rp-tag">shy</span> <span class="rp-tag">sigh</span> <span class="rp-tag">sing</span> <span class="rp-tag">sip</span> <span class="rp-tag">sneeze</span> <span class="rp-tag">sorry</span> <span class="rp-tag">surprised</span> <span class="rp-tag">tired</span> <span class="rp-tag">yay</span> <span class="rp-tag">+ more</span>
       </div>
     </div>
 
@@ -847,12 +734,7 @@
         <div class="cmd"><span class="cmd-name">lastfm stats</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Full profile &amp; scrobbles</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">lastfm connect</span>
-        <span class="cmd-tag">lastfm disconnect</span>
-        <span class="cmd-tag">lastfm recent</span>
-        <span class="cmd-tag">lastfm plays</span>
-        <span class="cmd-tag">lastfm autoplay mode</span>
-        <span class="cmd-tag">lastfm update</span>
+        <span class="cmd-tag">lastfm connect</span> <span class="cmd-tag">lastfm disconnect</span> <span class="cmd-tag">lastfm recent</span> <span class="cmd-tag">lastfm plays</span> <span class="cmd-tag">lastfm autoplay mode</span> <span class="cmd-tag">lastfm update</span>
       </div>
     </div>
 
@@ -897,12 +779,7 @@
         <div class="cmd"><span class="cmd-name">votereminder</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Toggle vote reminders</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">bumpreminder message</span>
-        <span class="cmd-tag">bumpreminder thankyou</span>
-        <span class="cmd-tag">bumpreminder test</span>
-        <span class="cmd-tag">bumpreminder variables</span>
-        <span class="cmd-tag">bumpreminder config</span>
-        <span class="cmd-tag">bumpreminder reset</span>
+        <span class="cmd-tag">bumpreminder message</span> <span class="cmd-tag">bumpreminder thankyou</span> <span class="cmd-tag">bumpreminder test</span> <span class="cmd-tag">bumpreminder variables</span> <span class="cmd-tag">bumpreminder config</span> <span class="cmd-tag">bumpreminder reset</span>
       </div>
     </div>
 
@@ -923,14 +800,7 @@
         <div class="cmd"><span class="cmd-name">whois</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Lookup user by ID</span></div>
       </div>
       <div class="cmd-tags">
-        <span class="cmd-tag">roles</span>
-        <span class="cmd-tag">inrole</span>
-        <span class="cmd-tag">joined</span>
-        <span class="cmd-tag">recentjoin</span>
-        <span class="cmd-tag">invitelookup</span>
-        <span class="cmd-tag">serverbanner</span>
-        <span class="cmd-tag">serveravatar</span>
-        <span class="cmd-tag">emoji</span>
+        <span class="cmd-tag">roles</span> <span class="cmd-tag">inrole</span> <span class="cmd-tag">joined</span> <span class="cmd-tag">recentjoin</span> <span class="cmd-tag">invitelookup</span> <span class="cmd-tag">serverbanner</span> <span class="cmd-tag">serveravatar</span> <span class="cmd-tag">emoji</span>
       </div>
     </div>
 
@@ -941,15 +811,15 @@
       </div>
       <p class="section-desc">Reward your server boosters with personal custom roles. Boosters can change their role name, color, and icon freely.</p>
       <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">boosterplugin enable</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Enable booster roles</span></div>
+        <div class="cmd"><span class="cmd-name">enableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Enable booster roles</span></div>
         <div class="cmd"><span class="cmd-name">booster</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Create &amp; customize your role</span></div>
-        <div class="cmd"><span class="cmd-name">boosterplugin disable</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Disable booster plugin</span></div>
+        <div class="cmd"><span class="cmd-name">disableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Disable booster plugin</span></div>
       </div>
     </div>
 
     <div class="callout" data-reveal>
       <div class="callout-title">Why Aiko?</div>
-      <p class="callout-text">334+ commands, zero paywalls, and constant updates. Aiko gives your server everything it needs - moderation, economy, games, music tracking, AI chat, and way more - all completely free. No premium tiers, no locked features. Just add and go.</p>
+      <p class="callout-text">440+ commands, zero paywalls, and constant updates. Aiko gives your server everything it needs - moderation, economy, games, music tracking, AI chat, and way more - all completely free. No premium tiers, no locked features. Just add and go.</p>
     </div>
 
     <hr class="divider">
