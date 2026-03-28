@@ -13,843 +13,1252 @@
     :root {
       --bg: #000000;
       --bg-card: #0a0a0f;
+      --bg-card-hover: #0f0f18;
       --text: #e4e4e7;
       --text-muted: #71717a;
       --text-dim: #52525b;
       --accent: #814ac8;
       --accent-light: #df7afe;
       --gradient: linear-gradient(135deg, #814ac8, #df7afe);
+      --gradient-wide: linear-gradient(135deg, #6a3aaa, #814ac8, #b06ae0, #df7afe);
       --border: rgba(255, 255, 255, 0.06);
-      --border-accent: rgba(129, 74, 200, 0.12);
+      --border-accent: rgba(129, 74, 200, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
     }
 
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #050508; }
-    ::-webkit-scrollbar-thumb { background: rgba(129, 74, 200, 0.3); border-radius: 8px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(129, 74, 200, 0.5); }
-    html { scrollbar-color: rgba(129, 74, 200, 0.3) #050508; scrollbar-width: thin; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(129, 74, 200, 0.25); border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(129, 74, 200, 0.45); }
+    html { scrollbar-color: rgba(129, 74, 200, 0.25) transparent; scrollbar-width: thin; scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.6;
       overflow-x: hidden;
     }
 
-    ::selection { background: rgba(129, 74, 200, 0.3); color: #fff; }
+    ::selection { background: rgba(129, 74, 200, 0.35); color: #fff; }
 
-    .bg-glow {
-      position: fixed;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 700px;
-      height: 500px;
-      background: radial-gradient(ellipse, rgba(129, 74, 200, 0.1) 0%, transparent 70%);
-      z-index: 0;
+    
+    .bg-noise {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-repeat: repeat;
     }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 860px;
+    .bg-glow-top {
+      position: fixed; top: -300px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse, rgba(129, 74, 200, 0.12) 0%, rgba(223, 122, 254, 0.04) 40%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+
+    .bg-glow-mid {
+      position: absolute; top: 1800px; right: -200px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(129, 74, 200, 0.06) 0%, transparent 70%);
+      z-index: 0; pointer-events: none;
+    }
+
+    
+    .page-wrap {
+      position: relative; z-index: 1;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 50px 24px 64px;
+      padding: 0 24px;
     }
 
-    .banner {
+    
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 960px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+
+    .topbar-logo {
+      font-size: 1.25rem; font-weight: 800; color: #fff;
+      text-decoration: none; letter-spacing: 0.5px;
+    }
+
+    .topbar-logo span {
+      background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .topbar-links { display: flex; gap: 6px; }
+
+    .topbar-links a {
+      color: var(--text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+      padding: 6px 14px; border-radius: 8px; transition: all 0.2s;
+    }
+    .topbar-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    .topbar-cta {
+      background: var(--gradient) !important; color: #fff !important;
+      font-weight: 600 !important; padding: 6px 18px !important;
+      -webkit-text-fill-color: #fff !important;
+    }
+    .topbar-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    
+    .hero {
       text-align: center;
-      padding: 40px 0 20px;
+      padding: 100px 0 60px;
+      position: relative;
     }
 
-    .banner h1 {
-      font-size: 5rem;
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 16px 5px 6px;
+      background: rgba(129, 74, 200, 0.08);
+      border: 1px solid var(--border-accent);
+      border-radius: 50px;
+      font-size: 0.75rem; font-weight: 600; color: var(--accent-light);
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: badgePulse 3s ease-in-out infinite;
+    }
+
+    .hero-badge .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { border-color: rgba(129, 74, 200, 0.15); }
+      50% { border-color: rgba(129, 74, 200, 0.3); }
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 12vw, 7.5rem);
       font-weight: 900;
-      background: linear-gradient(135deg, #ffffff 0%, #888888 25%, #ffffff 50%, #888888 75%, #ffffff 100%);
+      line-height: 1;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 30%, #df7afe 60%, #814ac8 80%, #ffffff 100%);
       background-size: 300% 300%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      animation: titleShift 10s linear infinite;
-      letter-spacing: 2px;
-      line-height: 1.1;
+      animation: heroGradient 8s ease infinite;
+      margin-bottom: 20px;
     }
 
-    .banner .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      margin-top: 12px;
-      font-weight: 400;
-    }
-
-    .banner .tagline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 16px;
-      padding: 6px 18px;
-      background: rgba(129, 74, 200, 0.08);
-      border: 1px solid var(--border-accent);
-      border-radius: 50px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--accent-light);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    @keyframes titleShift {
+    @keyframes heroGradient {
       0% { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
-    .nav-btns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 28px 0 8px;
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
     }
 
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 10px 22px;
-      border-radius: 50px;
-      font-family: 'Figtree', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
+    .hero-buttons {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 0.9rem; font-weight: 600;
       text-decoration: none;
-      transition: all 0.25s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer; border: none;
     }
 
-    .nav-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
-
-    .nav-btn--primary {
-      background: var(--gradient);
-      color: #fff;
-      border: none;
+    .btn-primary {
+      background: var(--gradient); color: #fff;
+      box-shadow: 0 4px 20px rgba(129, 74, 200, 0.3);
     }
-    .nav-btn--primary:hover {
-      opacity: 0.9;
+    .btn-primary:hover {
+      box-shadow: 0 6px 30px rgba(129, 74, 200, 0.45);
       transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(129, 74, 200, 0.3);
     }
 
-    .nav-btn--outline {
-      background: transparent;
-      color: rgba(255, 255, 255, 0.6);
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05); color: var(--text);
       border: 1px solid var(--border);
     }
-    .nav-btn--outline:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.04);
-      transform: translateY(-2px);
-    }
-    .nav-btn--blue {
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      color: #60a5fa;
-    }
-    .nav-btn--blue:hover {
-      background: rgba(59, 130, 246, 0.15);
-      border-color: rgba(59, 130, 246, 0.35);
-      color: #93bbfd;
-      transform: translateY(-2px);
-    }
-    .nav-btn--green {
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.2);
-      color: #4ade80;
-    }
-    .nav-btn--green:hover {
-      background: rgba(34, 197, 94, 0.15);
-      border-color: rgba(34, 197, 94, 0.35);
-      color: #86efac;
-      transform: translateY(-2px);
-    }
-    .nav-btn--cyan {
-      background: rgba(6, 182, 212, 0.1);
-      border: 1px solid rgba(6, 182, 212, 0.2);
-      color: #22d3ee;
-    }
-    .nav-btn--cyan:hover {
-      background: rgba(6, 182, 212, 0.15);
-      border-color: rgba(6, 182, 212, 0.35);
-      color: #67e8f9;
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
       transform: translateY(-2px);
     }
 
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin: 32px 0 16px;
-      flex-wrap: wrap;
+    .btn-vote {
+      background: #ff3366; color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 51, 102, 0.25);
+    }
+    .btn-vote:hover {
+      box-shadow: 0 6px 30px rgba(255, 51, 102, 0.4);
+      transform: translateY(-2px);
     }
 
-    .stat {
-      text-align: center;
-      padding: 14px 22px;
+    
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 60px 0 80px;
+    }
+
+    .stat-item {
       background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      min-width: 120px;
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      padding: 28px 16px;
+      text-align: center;
+      transition: background 0.3s;
+    }
+    .stat-item:hover { background: var(--bg-card-hover); }
+
+    .stat-number {
+      font-size: 2rem; font-weight: 800; color: #fff;
+      font-variant-numeric: tabular-nums;
     }
 
-    .stat:hover {
-      transform: translateY(-2px);
-      border-color: rgba(129, 74, 200, 0.2);
-    }
-
-    .stat-num {
-      display: block;
-      font-size: 1.6rem;
-      font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.2;
-    }
+    .stat-number .counter-suffix { color: var(--accent-light); }
 
     .stat-label {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 600;
-      margin-top: 2px;
+      font-size: 0.78rem; color: var(--text-dim); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px;
     }
 
-    .divider {
-      height: 1px;
-      border: none;
-      background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.2), transparent);
-      margin: 40px 0;
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
     }
 
-    .section {
-      position: relative;
-      margin-bottom: 16px;
+    .section-header .kicker {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2px; color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem; font-weight: 800; color: #fff;
+      letter-spacing: -0.5px;
+    }
+
+    .section-header p {
+      color: var(--text-muted); font-size: 1rem; margin-top: 10px;
+      max-width: 540px; margin-left: auto; margin-right: auto;
+    }
+
+    
+    .why-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      margin-bottom: 100px;
+    }
+
+    .why-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(30px);
-      overflow: hidden;
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative; overflow: hidden;
     }
 
-    .section::before {
+    .why-card::before {
       content: '';
-      position: absolute;
-      top: 0; left: 0; right: 50%;
-      height: 40%;
-      background: radial-gradient(ellipse at 0% 0%, rgba(255,255,255,0.025) 0%, transparent 70%);
-      pointer-events: none;
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gradient); opacity: 0;
+      transition: opacity 0.3s;
     }
 
-    .section.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+    .why-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(129, 74, 200, 0.08);
+    }
+    .why-card:hover::before { opacity: 1; }
+
+    .why-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(129, 74, 200, 0.1);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; color: var(--accent-light);
+    }
+    .why-icon svg { width: 22px; height: 22px; }
+
+    .why-card h3 {
+      font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 8px;
     }
 
-    .section:hover {
-      border-color: rgba(129, 74, 200, 0.15);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      transform: translateY(-2px);
+    .why-card p {
+      font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
     }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    
+    .commands-section { margin-bottom: 100px; }
+
+    .tab-nav {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      justify-content: center;
+      margin-bottom: 32px;
+      padding: 6px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-size: 0.92rem; font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.25s;
+      font-family: inherit;
+      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .tab-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .tab-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+
+    .tab-btn.active {
+      color: #fff;
+      background: var(--gradient);
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(129, 74, 200, 0.35);
+    }
+
+    .tab-btn .tab-count {
+      display: inline-block;
+      margin-left: 5px; font-size: 0.7rem;
+      opacity: 0.6;
+    }
+
+    .tab-panel {
+      display: none;
+      animation: tabFade 0.35s ease;
+    }
+
+    .tab-panel.active { display: block; }
+
+    @keyframes tabFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .cat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .cat-card-head {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    }
+
+    .cat-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(129, 74, 200, 0.1); color: var(--accent-light);
+    }
+    .cat-card-icon svg { width: 20px; height: 20px; }
+
+    .cat-card-head h3 { font-size: 1.1rem; font-weight: 700; color: #fff; }
+
+    .cat-card-head .cat-count {
+      margin-left: auto;
+      font-size: 0.75rem; color: var(--text-dim); font-weight: 600;
+      background: rgba(255,255,255,0.04); padding: 3px 10px; border-radius: 20px;
+    }
+
+    .featured-cmds {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .featured-cmd {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+
+    .featured-cmd:hover {
+      background: rgba(129, 74, 200, 0.06);
+      border-color: var(--border-accent);
+      transform: translateX(3px);
+    }
+
+    .featured-cmd .cmd-name {
+      font-size: 0.88rem; font-weight: 600; color: #fff;
+    }
+
+    .featured-cmd .cmd-desc {
+      font-size: 0.75rem; color: var(--text-dim); margin-top: 1px;
+    }
+
+    .cmd-badge-new {
+      font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; padding: 2px 6px; border-radius: 4px;
+      letter-spacing: 0.5px; margin-left: auto; flex-shrink: 0;
+    }
+
+    .more-cmds {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .more-cmds .cmd-tag {
+      font-size: 0.75rem; font-weight: 500;
+      color: var(--text-dim);
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.04);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .more-cmds .cmd-tag:hover {
+      color: var(--accent-light);
+      border-color: var(--border-accent);
+    }
+
+    
+    .spotlight {
+      margin-bottom: 100px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius);
+      padding: 40px;
+      position: relative; overflow: hidden;
+    }
+
+    .spotlight::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--gradient-wide);
+    }
+
+    .spotlight::after {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(129, 74, 200, 0.08) 0%, transparent 70%);
+    }
+
+    .spotlight-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff; padding: 4px 12px; border-radius: 6px;
+      margin-bottom: 18px;
+    }
+
+    .spotlight h3 {
+      font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 10px;
+    }
+
+    .spotlight p {
+      color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin-bottom: 20px; line-height: 1.7;
+    }
+
+    .spotlight-features {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+
+    .spotlight-feat {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px;
+      background: rgba(129, 74, 200, 0.06);
+      border: 1px solid var(--border-accent);
+      border-radius: 8px;
+      font-size: 0.82rem; font-weight: 500; color: var(--text);
+    }
+
+    
+    .premium-section {
+      margin-bottom: 100px;
+      text-align: center;
+    }
+
+    .premium-card {
+      background: linear-gradient(135deg, rgba(129, 74, 200, 0.08) 0%, rgba(223, 122, 254, 0.04) 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius);
+      padding: 60px 40px;
+      position: relative; overflow: hidden;
+    }
+
+    .premium-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(129, 74, 200, 0.06) 0%, transparent 60%);
+    }
+
+    .premium-card .kicker {
+      display: inline-block; position: relative;
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 2px;
+      background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 14px;
     }
 
-    .section-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .premium-card h2 {
+      position: relative;
+      font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 14px;
     }
 
-    .section-icon { font-size: 1.2rem; }
-
-    .cmd-count {
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: var(--accent-light);
-      background: rgba(129, 74, 200, 0.08);
-      border: 1px solid var(--border-accent);
-      padding: 4px 12px;
-      border-radius: 50px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .premium-card p {
+      position: relative;
+      color: var(--text-muted); font-size: 0.95rem; max-width: 480px;
+      margin: 0 auto 30px; line-height: 1.7;
     }
 
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      margin-bottom: 16px;
-      line-height: 1.65;
+    .premium-perks {
+      position: relative;
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin-bottom: 30px;
     }
 
-    .cmd-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-    }
-
-    .cmd {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 8px;
-      transition: background 0.2s ease;
-    }
-
-    .cmd:hover { background: rgba(129, 74, 200, 0.04); }
-
-    .cmd-name {
-      font-weight: 600;
-      color: #d4d4d8;
-      font-size: 0.84rem;
-      white-space: nowrap;
-    }
-
-    .cmd-dot { color: var(--accent); font-size: 0.6rem; }
-
-    .cmd-desc { color: var(--text-dim); font-size: 0.78rem; }
-
-    .cmd-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid var(--border);
-    }
-
-    .cmd-tag {
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--text-dim);
+    .premium-perk {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
-
-    .rp-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .rp-tag {
-      font-size: 0.73rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: rgba(129, 74, 200, 0.04);
-      border: 1px solid rgba(129, 74, 200, 0.08);
-      padding: 4px 12px;
       border-radius: 8px;
-      transition: all 0.2s ease;
+      font-size: 0.82rem; color: var(--text);
     }
 
-    .rp-tag:hover {
-      background: rgba(129, 74, 200, 0.1);
-      border-color: rgba(129, 74, 200, 0.2);
-      color: var(--accent-light);
-    }
+    .premium-perk .check { color: var(--accent-light); }
 
-    .callout {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      margin: 40px 0;
-      text-align: center;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .callout::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(129, 74, 200, 0.2), transparent);
-    }
-
-    .callout.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .callout-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 10px;
-    }
-
-    .callout-text {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      max-width: 580px;
-      margin: 0 auto;
-      line-height: 1.75;
-    }
-
-    .links {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 32px;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .links.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-
-    .link-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      background: var(--gradient);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.86rem;
-      font-family: 'Figtree', sans-serif;
-      transition: all 0.25s ease;
-    }
-
-    .link-btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-      box-shadow: 0 6px 24px rgba(129, 74, 200, 0.3);
-    }
-
-    .link-btn-outline {
-      background: transparent;
-      border: 1px solid var(--border);
-      color: rgba(255, 255, 255, 0.6);
-    }
-
-    .link-btn-outline:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: #fff;
-      box-shadow: none;
-      opacity: 1;
-    }
-
+    
     .footer {
-      text-align: center;
-      margin-top: 48px;
-      padding-top: 24px;
       border-top: 1px solid var(--border);
-      color: var(--text-dim);
-      font-size: 0.75rem;
+      padding: 48px 0 40px;
+      margin-top: 40px;
     }
 
-    .section:nth-child(1)  { transition-delay: 0s; }
-    .section:nth-child(2)  { transition-delay: 0.05s; }
-    .section:nth-child(3)  { transition-delay: 0.1s; }
-    .section:nth-child(4)  { transition-delay: 0.15s; }
-    .section:nth-child(5)  { transition-delay: 0.2s; }
-    .section:nth-child(6)  { transition-delay: 0.25s; }
-    .section:nth-child(7)  { transition-delay: 0.3s; }
-    .section:nth-child(8)  { transition-delay: 0.35s; }
-    .section:nth-child(9)  { transition-delay: 0.4s; }
-    .section:nth-child(10) { transition-delay: 0.45s; }
-    .section:nth-child(11) { transition-delay: 0.5s; }
-    .section:nth-child(12) { transition-delay: 0.55s; }
-    .section:nth-child(13) { transition-delay: 0.6s; }
+    .footer-inner {
+      max-width: 960px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-wrap: wrap; gap: 48px; justify-content: space-between;
+    }
 
-    @media (max-width: 640px) {
-      .container { padding: 32px 16px 48px; }
-      .banner h1 { font-size: 3.2rem; }
-      .banner .subtitle { font-size: 0.95rem; }
-      .stats { gap: 10px; }
-      .stat { min-width: 90px; padding: 12px 14px; }
-      .stat-num { font-size: 1.3rem; }
-      .cmd-grid { grid-template-columns: 1fr; }
-      .section { padding: 18px; }
-      .links { flex-direction: column; align-items: center; }
-      .link-btn, .link-btn-outline { width: 100%; max-width: 300px; justify-content: center; }
-      .nav-btns { flex-direction: column; align-items: center; }
-      .nav-btn { width: 100%; max-width: 280px; justify-content: center; }
+    .footer-brand h4 {
+      font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 8px;
+    }
+
+    .footer-brand p {
+      font-size: 0.82rem; color: var(--text-dim); max-width: 280px; line-height: 1.6;
+    }
+
+    .footer-col h5 {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--text-dim); margin-bottom: 14px;
+    }
+
+    .footer-col a {
+      display: block; color: var(--text-muted); text-decoration: none;
+      font-size: 0.85rem; padding: 3px 0; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--accent-light); }
+
+    .footer-bottom {
+      max-width: 960px; margin: 0 auto; padding: 24px 24px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 32px;
+      text-align: center;
+      font-size: 0.78rem; color: var(--text-dim);
+    }
+
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    
+    @media (max-width: 768px) {
+      .hero { padding: 70px 0 40px; }
+      .hero h1 { letter-spacing: -1px; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: 1fr; }
+      .tab-nav { gap: 6px; padding: 6px; }
+      .tab-btn { padding: 10px 16px; font-size: 0.82rem; }
+      .tab-btn svg { width: 14px; height: 14px; }
+      .featured-cmds { grid-template-columns: 1fr; }
+      .topbar-links .hide-mobile { display: none; }
+      .footer-inner { gap: 32px; flex-direction: column; }
+      .spotlight { padding: 28px 20px; }
+      .premium-card { padding: 40px 20px; }
+      .section-header h2 { font-size: 1.7rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 280px; justify-content: center; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-number { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-glow"></div>
+<div class="bg-noise"></div>
+<div class="bg-glow-top"></div>
 
-  <div class="container">
-
-    <div class="banner">
-      <h1>Aiko</h1>
-      <p class="subtitle">A powerful all-in-one Discord bot</p>
-      <span class="tagline">440+ Commands &bull; 99.9% Uptime &bull; Zero Cost</span>
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a href="https://aiko.best" class="topbar-logo"><span>Aiko</span></a>
+    <div class="topbar-links">
+      <a href="https://aiko.best/commands" class="hide-mobile">Commands</a>
+      <a href="https://aiko.best/dashboard" class="hide-mobile">Dashboard</a>
+      <a href="https://discord.gg/2Jb6bNFcvz" class="hide-mobile">Support</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875" class="topbar-cta">Add to Server</a>
     </div>
+  </div>
+</nav>
 
-    <div class="nav-btns">
-      <a href="https://aiko.best" target="_blank" rel="noopener" class="nav-btn nav-btn--primary">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Website
+<div class="page-wrap">
+
+  
+  <section class="hero">
+    <div class="reveal">
+      <div class="hero-badge"><div class="dot"></div> Trusted by 2,500+ servers</div>
+    </div>
+    <h1 class="reveal reveal-delay-1">Aiko</h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      The all-in-one Discord bot with 440+ commands. Moderation, music, economy, games, social feeds, Last.fm, auto-posting, and way more - all in one place.
+    </p>
+    <div class="hero-buttons reveal reveal-delay-3">
+      <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875" class="btn btn-primary">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        Add to Server
       </a>
-      <a href="https://aiko.best/dashboard" target="_blank" rel="noopener" class="nav-btn nav-btn--blue">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-        Dashboard
+      <a href="https://top.gg/bot/1236831177868836875/vote" class="btn btn-vote">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+        Vote on Top.gg
       </a>
-      <a href="https://discord.gg/2Jb6bNFcvz" target="_blank" rel="noopener" class="nav-btn nav-btn--green">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Support
-      </a>
-      <a href="https://aiko.best/commands" target="_blank" rel="noopener" class="nav-btn nav-btn--cyan">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-        Commands
+      <a href="https://discord.gg/2Jb6bNFcvz" class="btn btn-secondary">
+        Join Support
       </a>
     </div>
+  </section>
 
-    <div class="stats">
-      <div class="stat">
-        <span class="stat-num">340K+</span>
-        <span class="stat-label">Users</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">2,500+</span>
-        <span class="stat-label">Servers</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">440+</span>
-        <span class="stat-label">Commands</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">99.9%</span>
-        <span class="stat-label">Uptime</span>
-      </div>
+  
+  <div class="stats-bar reveal">
+    <div class="stat-item">
+      <div class="stat-number"><span class="counter" data-target="340">0</span><span class="counter-suffix">K+</span></div>
+      <div class="stat-label">Users</div>
     </div>
-
-    <hr class="divider">
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F6E1;</span> Moderation</div>
-        <span class="cmd-count">14 commands</span>
-      </div>
-      <p class="section-desc">Powerful tools to keep your server safe and under control. Ban, kick, mute, and manage members with detailed mod logs.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">ban</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Ban a member from the server</span></div>
-        <div class="cmd"><span class="cmd-name">kick</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Kick a member from the server</span></div>
-        <div class="cmd"><span class="cmd-name">mute</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Timeout a member for a duration</span></div>
-        <div class="cmd"><span class="cmd-name">purge</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Bulk delete messages</span></div>
-        <div class="cmd"><span class="cmd-name">nuke</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Clone &amp; wipe a channel</span></div>
-        <div class="cmd"><span class="cmd-name">lock</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Lock the current channel</span></div>
-        <div class="cmd"><span class="cmd-name">slowmode</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set channel slowmode</span></div>
-        <div class="cmd"><span class="cmd-name">modlog</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View moderation history</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">unban</span>
-        <span class="cmd-tag">unmute</span>
-        <span class="cmd-tag">unlock</span>
-        <span class="cmd-tag">case</span>
-        <span class="cmd-tag">modhelp</span>
-        <span class="cmd-tag">purgereaction</span>
-      </div>
+    <div class="stat-item">
+      <div class="stat-number"><span class="counter" data-target="2500">0</span><span class="counter-suffix">+</span></div>
+      <div class="stat-label">Servers</div>
     </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1FA99;</span> Economy</div>
-        <span class="cmd-count">26 commands</span>
-      </div>
-      <p class="section-desc">A full economy system with gambling, mining, fishing, and more. Grind your way to the top of the leaderboard.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">daily</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Collect daily coins &amp; lootbox</span></div>
-        <div class="cmd"><span class="cmd-name">work</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Work a job to earn coins</span></div>
-        <div class="cmd"><span class="cmd-name">gamble</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Gamble coins to win or lose</span></div>
-        <div class="cmd"><span class="cmd-name">blackjack</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Play blackjack with bets</span></div>
-        <div class="cmd"><span class="cmd-name">fish</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Go fishing to earn coins</span></div>
-        <div class="cmd"><span class="cmd-name">mine</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Play minesweeper for coins</span></div>
-        <div class="cmd"><span class="cmd-name">rob</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Rob coins from another user</span></div>
-        <div class="cmd"><span class="cmd-name">leaderboard</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View richest users</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">weekly</span>
-        <span class="cmd-tag">balance</span>
-        <span class="cmd-tag">deposit</span>
-        <span class="cmd-tag">withdraw</span>
-        <span class="cmd-tag">give</span>
-        <span class="cmd-tag">spin</span>
-        <span class="cmd-tag">coinflip</span>
-        <span class="cmd-tag">hunt</span>
-        <span class="cmd-tag">lootbox</span>
-        <span class="cmd-tag">beg</span>
-        <span class="cmd-tag">crime</span>
-        <span class="cmd-tag">walk</span>
-        <span class="cmd-tag">wish</span>
-        <span class="cmd-tag">math</span>
-        <span class="cmd-tag">collect</span>
-        <span class="cmd-tag">checklist</span>
-      </div>
+    <div class="stat-item">
+      <div class="stat-number"><span class="counter" data-target="440">0</span><span class="counter-suffix">+</span></div>
+      <div class="stat-label">Commands</div>
     </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F3AE;</span> Games &amp; Fun</div>
-        <span class="cmd-count">39 commands</span>
-      </div>
-      <p class="section-desc">20+ mini-games, social commands, and fun interactions to keep your server active and entertaining.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">trivia</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Timed knowledge challenges</span></div>
-        <div class="cmd"><span class="cmd-name">tictactoe</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Play vs a user or Aiko</span></div>
-        <div class="cmd"><span class="cmd-name">fight</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Battle another user</span></div>
-        <div class="cmd"><span class="cmd-name">ship</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Check love compatibility</span></div>
-        <div class="cmd"><span class="cmd-name">truthordare</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Truth or dare game channel</span></div>
-        <div class="cmd"><span class="cmd-name">rockpaperscissors</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Classic RPS vs the bot</span></div>
-        <div class="cmd"><span class="cmd-name">guessgame</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Number guessing channel</span></div>
-        <div class="cmd"><span class="cmd-name">meme</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Random memes from Reddit</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">rate</span> <span class="cmd-tag">iq</span> <span class="cmd-tag">rizz</span> <span class="cmd-tag">simp</span> <span class="cmd-tag">drip</span> <span class="cmd-tag">aura</span> <span class="cmd-tag">ppsize</span> <span class="cmd-tag">howgay</span> <span class="cmd-tag">8ball</span> <span class="cmd-tag">joke</span> <span class="cmd-tag">juul</span> <span class="cmd-tag">gif</span> <span class="cmd-tag">fakeban</span> <span class="cmd-tag">poll</span> <span class="cmd-tag">cat</span> <span class="cmd-tag">dog</span> <span class="cmd-tag">roast</span> <span class="cmd-tag">compliment</span> <span class="cmd-tag">candy</span> <span class="cmd-tag">cake</span> <span class="cmd-tag">pizza</span> <span class="cmd-tag">roll</span> <span class="cmd-tag">nword</span>
-      </div>
+    <div class="stat-item">
+      <div class="stat-number">99.9<span class="counter-suffix">%</span></div>
+      <div class="stat-label">Uptime</div>
     </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F527;</span> Utility &amp; Tools</div>
-        <span class="cmd-count">34 commands</span>
-      </div>
-      <p class="section-desc">Essential everyday tools - snipe deleted messages, download media, translate text, search YouTube, check weather, and much more.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">snipe</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View deleted messages</span></div>
-        <div class="cmd"><span class="cmd-name">editsnipe</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">View edited messages</span></div>
-        <div class="cmd"><span class="cmd-name">download</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Save TikTok, IG, YT media</span></div>
-        <div class="cmd"><span class="cmd-name">translate</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Translate text to English</span></div>
-        <div class="cmd"><span class="cmd-name">makegif</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Convert video to GIF</span></div>
-        <div class="cmd"><span class="cmd-name">weather</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Get weather for any city</span></div>
-        <div class="cmd"><span class="cmd-name">screenshot</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Screenshot a website</span></div>
-        <div class="cmd"><span class="cmd-name">youtube</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Search YouTube videos</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">reactionsnipe</span> <span class="cmd-tag">embed</span> <span class="cmd-tag">texttospeech</span> <span class="cmd-tag">makemp3</span> <span class="cmd-tag">calculator</span> <span class="cmd-tag">crypto</span> <span class="cmd-tag">movie</span> <span class="cmd-tag">instagram</span> <span class="cmd-tag">tiktok</span> <span class="cmd-tag">steam</span> <span class="cmd-tag">roblox</span> <span class="cmd-tag">tweet</span> <span class="cmd-tag">quote</span> <span class="cmd-tag">googleimage</span> <span class="cmd-tag">urbandictionary</span> <span class="cmd-tag">hex</span> <span class="cmd-tag">lookup</span> <span class="cmd-tag">media</span> <span class="cmd-tag">say</span> <span class="cmd-tag">time</span> <span class="cmd-tag">topcommands</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x2699;&#xFE0F;</span> Server Setup</div>
-        <span class="cmd-count">86 commands</span>
-      </div>
-      <p class="section-desc">Fully customize your server - welcome messages, goodbye messages, boost embeds, leveling system, button roles, tag rewards, and more.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">welcome setup</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Custom welcome embeds</span></div>
-        <div class="cmd"><span class="cmd-name">goodbye setup</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Custom goodbye messages</span></div>
-        <div class="cmd"><span class="cmd-name">boost setup</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Thank you boost embeds</span></div>
-        <div class="cmd"><span class="cmd-name">levels enable</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">XP leveling system</span></div>
-        <div class="cmd"><span class="cmd-name">buttonrole</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Button-based self roles</span></div>
-        <div class="cmd"><span class="cmd-name">joinrole</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Auto-assign roles on join</span></div>
-        <div class="cmd"><span class="cmd-name">skullboard</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Highlight funniest messages</span></div>
-        <div class="cmd"><span class="cmd-name">sticky</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Pin messages to channel top</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">setprefix</span> <span class="cmd-tag">customize</span> <span class="cmd-tag">webhook</span> <span class="cmd-tag">pingonjoin</span> <span class="cmd-tag">reactionchannel</span> <span class="cmd-tag">role</span> <span class="cmd-tag">hide</span> <span class="cmd-tag">topic</span> <span class="cmd-tag">nickname</span> <span class="cmd-tag">sticker</span> <span class="cmd-tag">steal</span> <span class="cmd-tag">safetycheck</span> <span class="cmd-tag">tagreward</span> <span class="cmd-tag">levels rewards</span> <span class="cmd-tag">levels leaderboard</span> <span class="cmd-tag">booster</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F916;</span> AI &amp; Chat</div>
-        <span class="cmd-count">27 commands</span>
-      </div>
-      <p class="section-desc">Built-in ChatGPT integration, auto-responder, auto-reactions, AFK system, reminders, and more smart utilities.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">chatgpt</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Ask ChatGPT anything</span></div>
-        <div class="cmd"><span class="cmd-name">autoresponder</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Auto-reply to keywords</span></div>
-        <div class="cmd"><span class="cmd-name">autoreaction</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Auto-react to triggers</span></div>
-        <div class="cmd"><span class="cmd-name">afk</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set away status</span></div>
-        <div class="cmd"><span class="cmd-name">reminder</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set personal reminders</span></div>
-        <div class="cmd"><span class="cmd-name">highlight</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Keyword notifications</span></div>
-        <div class="cmd"><span class="cmd-name">counting</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set up counting channel</span></div>
-        <div class="cmd"><span class="cmd-name">birthday</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Track server birthdays</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">setaichannel</span> <span class="cmd-tag">uwulock</span> <span class="cmd-tag">uwu</span> <span class="cmd-tag">uwuleaderboard</span> <span class="cmd-tag">imageonly</span> <span class="cmd-tag">clockin</span> <span class="cmd-tag">clockout</span> <span class="cmd-tag">dailyquote</span> <span class="cmd-tag">addemoji</span> <span class="cmd-tag">jail</span> <span class="cmd-tag">fakenitro</span> <span class="cmd-tag">quest</span> <span class="cmd-tag">questsnotify</span> <span class="cmd-tag">botclear</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F496;</span> Roleplay</div>
-        <span class="cmd-count">75 commands</span>
-      </div>
-      <p class="section-desc">75+ anime GIF interaction commands. Express yourself with hugs, kisses, pats, slaps, and dozens more actions.</p>
-      <div class="rp-grid">
-        <span class="rp-tag">hug</span> <span class="rp-tag">kiss</span> <span class="rp-tag">pat</span> <span class="rp-tag">cuddle</span> <span class="rp-tag">slap</span> <span class="rp-tag">bite</span> <span class="rp-tag">bonk</span> <span class="rp-tag">punch</span> <span class="rp-tag">tickle</span> <span class="rp-tag">poke</span> <span class="rp-tag">wave</span> <span class="rp-tag">wink</span> <span class="rp-tag">cry</span> <span class="rp-tag">dance</span> <span class="rp-tag">blush</span> <span class="rp-tag">lick</span> <span class="rp-tag">love</span> <span class="rp-tag">nuzzle</span> <span class="rp-tag">highfive</span> <span class="rp-tag">handhold</span> <span class="rp-tag">feed</span> <span class="rp-tag">happy</span> <span class="rp-tag">laugh</span> <span class="rp-tag">nom</span> <span class="rp-tag">yeet</span> <span class="rp-tag">smug</span> <span class="rp-tag">stare</span> <span class="rp-tag">think</span> <span class="rp-tag">run</span> <span class="rp-tag">sleep</span> <span class="rp-tag">smile</span> <span class="rp-tag">pout</span> <span class="rp-tag">shrug</span> <span class="rp-tag">nod</span> <span class="rp-tag">baka</span> <span class="rp-tag">cookie</span> <span class="rp-tag">facepalm</span> <span class="rp-tag">thumbsup</span> <span class="rp-tag">yawn</span> <span class="rp-tag">airkiss</span> <span class="rp-tag">brofist</span> <span class="rp-tag">celebrate</span> <span class="rp-tag">cheers</span> <span class="rp-tag">clap</span> <span class="rp-tag">confused</span> <span class="rp-tag">evillaugh</span> <span class="rp-tag">headbang</span> <span class="rp-tag">mad</span> <span class="rp-tag">nervous</span> <span class="rp-tag">peek</span> <span class="rp-tag">sad</span> <span class="rp-tag">scared</span> <span class="rp-tag">shy</span> <span class="rp-tag">sigh</span> <span class="rp-tag">sing</span> <span class="rp-tag">sip</span> <span class="rp-tag">sneeze</span> <span class="rp-tag">sorry</span> <span class="rp-tag">surprised</span> <span class="rp-tag">tired</span> <span class="rp-tag">yay</span> <span class="rp-tag">+ more</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F3B5;</span> Last.fm Integration</div>
-        <span class="cmd-count">13 commands</span>
-      </div>
-      <p class="section-desc">Connect your Last.fm account and share your music. Auto-post what you're listening to, view stats, create collages, and customize your embeds.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">nowplaying</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Show current track</span></div>
-        <div class="cmd"><span class="cmd-name">lastfm autoplay</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Auto-post listening activity</span></div>
-        <div class="cmd"><span class="cmd-name">lastfm mode</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Customize NP embeds</span></div>
-        <div class="cmd"><span class="cmd-name">lastfm topartists</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Your most listened artists</span></div>
-        <div class="cmd"><span class="cmd-name">lastfm collage</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Create album art collage</span></div>
-        <div class="cmd"><span class="cmd-name">lastfm stats</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Full profile &amp; scrobbles</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">lastfm connect</span> <span class="cmd-tag">lastfm disconnect</span> <span class="cmd-tag">lastfm recent</span> <span class="cmd-tag">lastfm plays</span> <span class="cmd-tag">lastfm autoplay mode</span> <span class="cmd-tag">lastfm update</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F381;</span> Giveaways</div>
-        <span class="cmd-count">4 commands</span>
-      </div>
-      <p class="section-desc">Create and manage server giveaways effortlessly. Start, end, reroll, or delete giveaways with a single command.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">giveaway</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Start a giveaway with prize</span></div>
-        <div class="cmd"><span class="cmd-name">giveawayend</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">End a giveaway early</span></div>
-        <div class="cmd"><span class="cmd-name">giveawayreroll</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Reroll winners</span></div>
-        <div class="cmd"><span class="cmd-name">giveawaydelete</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Delete a giveaway</span></div>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F50A;</span> VoiceMaster</div>
-        <span class="cmd-count">4 commands</span>
-      </div>
-      <p class="section-desc">Create temporary voice channels that members can customize. Full control panel with add, remove, and refresh options.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">voicemaster</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set up VoiceMaster interface</span></div>
-        <div class="cmd"><span class="cmd-name">voicemaster add</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Add user to your VC</span></div>
-        <div class="cmd"><span class="cmd-name">voicemaster remove</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Remove user from VC</span></div>
-        <div class="cmd"><span class="cmd-name">voicemaster refresh</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Reset VC settings</span></div>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F514;</span> Bump Reminder</div>
-        <span class="cmd-count">12 commands</span>
-      </div>
-      <p class="section-desc">Automated bump reminders with custom messages, role mentions, thank-you messages, and vote reminders for top.gg.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">bumpreminder</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Configure bump reminders</span></div>
-        <div class="cmd"><span class="cmd-name">bumpreminder channel</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set reminder channel</span></div>
-        <div class="cmd"><span class="cmd-name">bumpreminder role</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Set reminder mention role</span></div>
-        <div class="cmd"><span class="cmd-name">votereminder</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Toggle vote reminders</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">bumpreminder message</span> <span class="cmd-tag">bumpreminder thankyou</span> <span class="cmd-tag">bumpreminder test</span> <span class="cmd-tag">bumpreminder variables</span> <span class="cmd-tag">bumpreminder config</span> <span class="cmd-tag">bumpreminder reset</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F4CB;</span> Info &amp; Lookup</div>
-        <span class="cmd-count">15+ commands</span>
-      </div>
-      <p class="section-desc">Quick lookups for users, servers, roles, emojis, and invites. Everything you need to know at a glance.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">avatar</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Display user's avatar</span></div>
-        <div class="cmd"><span class="cmd-name">banner</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Display user's banner</span></div>
-        <div class="cmd"><span class="cmd-name">userinfo</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Detailed user info</span></div>
-        <div class="cmd"><span class="cmd-name">serverinfo</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Detailed server info</span></div>
-        <div class="cmd"><span class="cmd-name">roleinfo</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Role details &amp; permissions</span></div>
-        <div class="cmd"><span class="cmd-name">membercount</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Server member stats</span></div>
-        <div class="cmd"><span class="cmd-name">emojiinfo</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">All custom emojis</span></div>
-        <div class="cmd"><span class="cmd-name">whois</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Lookup user by ID</span></div>
-      </div>
-      <div class="cmd-tags">
-        <span class="cmd-tag">roles</span> <span class="cmd-tag">inrole</span> <span class="cmd-tag">joined</span> <span class="cmd-tag">recentjoin</span> <span class="cmd-tag">invitelookup</span> <span class="cmd-tag">serverbanner</span> <span class="cmd-tag">serveravatar</span> <span class="cmd-tag">emoji</span>
-      </div>
-    </div>
-
-    <div class="section" data-reveal>
-      <div class="section-header">
-        <div class="section-title"><span class="section-icon">&#x1F48E;</span> Booster Perks</div>
-        <span class="cmd-count">Custom Roles</span>
-      </div>
-      <p class="section-desc">Reward your server boosters with personal custom roles. Boosters can change their role name, color, and icon freely.</p>
-      <div class="cmd-grid">
-        <div class="cmd"><span class="cmd-name">enableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Enable booster roles</span></div>
-        <div class="cmd"><span class="cmd-name">booster</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Create &amp; customize your role</span></div>
-        <div class="cmd"><span class="cmd-name">disableboosterplugin</span> <span class="cmd-dot">&#x2022;</span> <span class="cmd-desc">Disable booster plugin</span></div>
-      </div>
-    </div>
-
-    <div class="callout" data-reveal>
-      <div class="callout-title">Why Aiko?</div>
-      <p class="callout-text">440+ commands and constant updates. Aiko gives your server everything it needs - moderation, economy, games, music tracking, AI chat, and way more - Just add and go.</p>
-    </div>
-
-    <hr class="divider">
-
-    <div class="links" data-reveal>
-      <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875" target="_blank" rel="noopener" class="link-btn">Add to Discord</a>
-      <a href="https://aiko.best/commands" target="_blank" rel="noopener" class="link-btn-outline link-btn">All Commands</a>
-      <a href="https://discord.gg/2Jb6bNFcvz" target="_blank" rel="noopener" class="link-btn-outline link-btn">Support Server</a>
-      <a href="https://top.gg/bot/1236831177868836875/vote" target="_blank" rel="noopener" class="link-btn-outline link-btn">Vote</a>
-    </div>
-
-    <div class="footer">
-      &copy; 2024&ndash;2026 Aiko &bull; aiko.best
-    </div>
-
   </div>
 
-  <script>
-    (function() {
-      var els = document.querySelectorAll('[data-reveal]');
-      var observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
+  
+  <section class="reveal">
+    <div class="section-header">
+      <span class="kicker">Why Aiko?</span>
+      <h2>Everything your server needs</h2>
+      <p>Stop juggling 10 different bots. Aiko replaces them all with one clean, reliable package.</p>
+    </div>
+  </section>
+
+  <div class="why-grid">
+    <div class="why-card reveal reveal-delay-1">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <h3>Lightning Fast</h3>
+      <p>Sub-second response times with 99.9% uptime. Sharded across multiple servers for reliability.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+      <h3>Premium Music</h3>
+      <p>High-quality music with autoplay, queue management, and crystal-clear playback.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Antinuke Protection</h3>
+      <p>Advanced antinuke modules protect your server from raids and rogue admins. Configurable and reliable.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-2">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <h3>Loaded with Fun</h3>
+      <p>Economy, games, leveling, roleplay, giveaways - hundreds of engagement features to keep members active.</p>
+    </div>
+    <div class="why-card reveal reveal-delay-3">
+      <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></div>
+      <h3>Full Customization</h3>
+      <p>Welcome/goodbye messages, autoresponders, reaction roles, booster perks, and a dashboard to manage it all.</p>
+    </div>
+  </div>
+
+  
+  <div class="spotlight reveal">
+    <div class="spotlight-badge">New Feature</div>
+    <h3>AutoPFP - Pinterest Profile Pictures & Banners</h3>
+    <p>Automatically post curated profile pictures and banners from Pinterest to your server. Set it up once and let Aiko deliver fresh aesthetic content on autopilot.</p>
+    <div class="spotlight-features">
+      <div class="spotlight-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Curated PFP feeds</div>
+      <div class="spotlight-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Banner collections</div>
+      <div class="spotlight-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Auto-posting schedule</div>
+      <div class="spotlight-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Custom categories</div>
+    </div>
+  </div>
+
+  
+  <section class="commands-section">
+    <div class="section-header reveal">
+      <span class="kicker">440+ Commands</span>
+      <h2>Explore every feature</h2>
+      <p>Browse commands by category. From moderation to roleplay, Aiko has it all.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="moderation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Moderation</button>
+        <button class="tab-btn" data-tab="music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg> Music</button>
+        <button class="tab-btn" data-tab="social"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Social</button>
+        <button class="tab-btn" data-tab="automation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Automation</button>
+        <button class="tab-btn" data-tab="economy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> Economy</button>
+        <button class="tab-btn" data-tab="utility"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg> Utility</button>
+        <button class="tab-btn" data-tab="fun"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><path d="M15 10l2 2-2 2"/></svg> Fun & Games</button>
+        <button class="tab-btn" data-tab="server"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Server</button>
+        <button class="tab-btn" data-tab="lastfm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><path d="M8 17V5l12-2v12"/></svg> Last.fm</button>
+        <button class="tab-btn" data-tab="roleplay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg> Roleplay</button>
+      </div>
+
+      
+      <div class="tab-panel active" id="tab-moderation">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <h3>Moderation & Antinuke</h3>
+            <span class="cat-count">25 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">purge</div><div class="cmd-desc">Bulk delete messages</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">ban / hardban</div><div class="cmd-desc">Ban with message wipe</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">antinuke</div><div class="cmd-desc">Full server protection</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">filter / automod</div><div class="cmd-desc">Auto content filtering</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">warn / warnings</div><div class="cmd-desc">Warning system</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">modlog</div><div class="cmd-desc">Mod action logging</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">kick</span>
+            <span class="cmd-tag">mute</span>
+            <span class="cmd-tag">unmute</span>
+            <span class="cmd-tag">unban</span>
+            <span class="cmd-tag">nuke</span>
+            <span class="cmd-tag">botclear</span>
+            <span class="cmd-tag">purgereaction</span>
+            <span class="cmd-tag">removewarn</span>
+            <span class="cmd-tag">clearwarns</span>
+            <span class="cmd-tag">case</span>
+            <span class="cmd-tag">strip</span>
+            <span class="cmd-tag">lock / unlock</span>
+            <span class="cmd-tag">lockchannel</span>
+            <span class="cmd-tag">threadlock</span>
+            <span class="cmd-tag">threadopen</span>
+            <span class="cmd-tag">hide / unhide</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-music">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+            <h3>Music & VoiceMaster</h3>
+            <span class="cat-count">14 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">play</div><div class="cmd-desc">Play from any source</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">queue</div><div class="cmd-desc">View song queue</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">nowplaying</div><div class="cmd-desc">Current track info</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">autoplay</div><div class="cmd-desc">Auto queue similar songs</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">loop</div><div class="cmd-desc">Loop track or queue</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">volume</div><div class="cmd-desc">Adjust playback volume</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">skip</span>
+            <span class="cmd-tag">stop</span>
+            <span class="cmd-tag">pause</span>
+            <span class="cmd-tag">resume</span>
+            <span class="cmd-tag">disconnect</span>
+            <span class="cmd-tag">clearqueue</span>
+            <span class="cmd-tag">skipto</span>
+            <span class="cmd-tag">voicemaster add/remove</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-social">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></div>
+            <h3>Social Content & Lookups</h3>
+            <span class="cat-count">18 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">meme</div><div class="cmd-desc">Reddit memes on demand</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">foryoupage</div><div class="cmd-desc">Trending TikToks</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">download</div><div class="cmd-desc">TikTok / Reels / YT</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">instagram</div><div class="cmd-desc">IG profile lookup</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">gimage</div><div class="cmd-desc">Google image search</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">crypto</div><div class="cmd-desc">Live crypto prices</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">funnyvideo</span>
+            <span class="cmd-tag">news</span>
+            <span class="cmd-tag">makegif</span>
+            <span class="cmd-tag">media / caption</span>
+            <span class="cmd-tag">roblox</span>
+            <span class="cmd-tag">steam</span>
+            <span class="cmd-tag">youtube</span>
+            <span class="cmd-tag">movie</span>
+            <span class="cmd-tag">afk</span>
+            <span class="cmd-tag">birthday</span>
+            <span class="cmd-tag">reminder</span>
+            <span class="cmd-tag">names</span>
+            <span class="cmd-tag">marry / divorce / partner</span>
+            <span class="cmd-tag">clown</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-automation">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <h3>Automation & Feeds</h3>
+            <span class="cat-count">14 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">autopfp</div><div class="cmd-desc">Pinterest PFPs & banners</div></div><span class="cmd-badge-new">NEW</span></div>
+            <div class="featured-cmd"><div><div class="cmd-name">automeme</div><div class="cmd-desc">Auto-post memes hourly</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">autoresponder</div><div class="cmd-desc">Custom auto-replies</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">starboard</div><div class="cmd-desc">Highlight popular posts</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">sticky</div><div class="cmd-desc">Pinned messages that stick</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">highlight</div><div class="cmd-desc">Keyword notifications</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">automation / autopost</span>
+            <span class="cmd-tag">bumpreminder</span>
+            <span class="cmd-tag">votereminder</span>
+            <span class="cmd-tag">chatgpt / AI</span>
+            <span class="cmd-tag">dailyquote</span>
+            <span class="cmd-tag">autoreaction</span>
+            <span class="cmd-tag">skullboard</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-economy">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <h3>Economy</h3>
+            <span class="cat-count">20+ commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">balance</div><div class="cmd-desc">Check your wallet</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">blackjack</div><div class="cmd-desc">Play 21 for coins</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">rob</div><div class="cmd-desc">Steal from others</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">leaderboard</div><div class="cmd-desc">Richest members</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">fish / mine / hunt</div><div class="cmd-desc">Earn through activities</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lootbox</div><div class="cmd-desc">Open mystery boxes</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">daily</span>
+            <span class="cmd-tag">weekly</span>
+            <span class="cmd-tag">work</span>
+            <span class="cmd-tag">deposit</span>
+            <span class="cmd-tag">withdraw</span>
+            <span class="cmd-tag">give</span>
+            <span class="cmd-tag">gamble</span>
+            <span class="cmd-tag">spin</span>
+            <span class="cmd-tag">coinflip</span>
+            <span class="cmd-tag">beg</span>
+            <span class="cmd-tag">crime</span>
+            <span class="cmd-tag">walk</span>
+            <span class="cmd-tag">wish</span>
+            <span class="cmd-tag">collect</span>
+            <span class="cmd-tag">checklist</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-utility">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+            <h3>Utilities & Profiles</h3>
+            <span class="cat-count">22 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">translate</div><div class="cmd-desc">Multi-language translate</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">screenshot</div><div class="cmd-desc">Capture any webpage</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">weather</div><div class="cmd-desc">Live weather data</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">embed create</div><div class="cmd-desc">Custom embed builder</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">avatar / banner</div><div class="cmd-desc">User profile images</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">calculator</div><div class="cmd-desc">Interactive calculator</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">texttospeech</span>
+            <span class="cmd-tag">color / hex</span>
+            <span class="cmd-tag">tweet</span>
+            <span class="cmd-tag">urbandictionary</span>
+            <span class="cmd-tag">topcommands</span>
+            <span class="cmd-tag">userinfo</span>
+            <span class="cmd-tag">whois</span>
+            <span class="cmd-tag">time</span>
+            <span class="cmd-tag">timezone</span>
+            <span class="cmd-tag">ping</span>
+            <span class="cmd-tag">setprefix</span>
+            <span class="cmd-tag">invite</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-fun">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="12" x2="6.01" y2="12"/><line x1="10" y1="12" x2="10.01" y2="12"/><path d="M15 10l2 2-2 2"/></svg></div>
+            <h3>Fun, Games & Leveling</h3>
+            <span class="cat-count">40+ commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">aikogame</div><div class="cmd-desc">Full economy game</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">tictactoe</div><div class="cmd-desc">Play against friends</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">trivia</div><div class="cmd-desc">Knowledge challenges</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">minesweeper</div><div class="cmd-desc">Classic puzzle game</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">rank / levels</div><div class="cmd-desc">XP leveling system</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">giveaway</div><div class="cmd-desc">Run server giveaways</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">quests</span>
+            <span class="cmd-tag">uwulock</span>
+            <span class="cmd-tag">poll</span>
+            <span class="cmd-tag">roast</span>
+            <span class="cmd-tag">rps</span>
+            <span class="cmd-tag">fight</span>
+            <span class="cmd-tag">coinflip</span>
+            <span class="cmd-tag">truth</span>
+            <span class="cmd-tag">dare</span>
+            <span class="cmd-tag">roll</span>
+            <span class="cmd-tag">8ball</span>
+            <span class="cmd-tag">joke</span>
+            <span class="cmd-tag">ship</span>
+            <span class="cmd-tag">howgay</span>
+            <span class="cmd-tag">ppsize</span>
+            <span class="cmd-tag">rizz</span>
+            <span class="cmd-tag">aura</span>
+            <span class="cmd-tag">iq</span>
+            <span class="cmd-tag">rate</span>
+            <span class="cmd-tag">drip</span>
+            <span class="cmd-tag">compliment</span>
+            <span class="cmd-tag">fact</span>
+            <span class="cmd-tag">wouldyourather</span>
+            <span class="cmd-tag">counting</span>
+            <span class="cmd-tag">guessgame</span>
+            <span class="cmd-tag">chatleaderboard</span>
+            <span class="cmd-tag">xpleaderboard</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-server">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+            <h3>Server Management & Setup</h3>
+            <span class="cat-count">39 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">welcome setup</div><div class="cmd-desc">Greet new members</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">reactionrole</div><div class="cmd-desc">Self-assign roles</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">joinrole</div><div class="cmd-desc">Auto role on join</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">boost setup</div><div class="cmd-desc">Booster announcements</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">snipe</div><div class="cmd-desc">Recover deleted messages</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">serverinfo</div><div class="cmd-desc">Full server details</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">goodbye setup</span>
+            <span class="cmd-tag">customize</span>
+            <span class="cmd-tag">nickname</span>
+            <span class="cmd-tag">safetycheck</span>
+            <span class="cmd-tag">slowmode</span>
+            <span class="cmd-tag">imageonly</span>
+            <span class="cmd-tag">channeldelete</span>
+            <span class="cmd-tag">tagreward</span>
+            <span class="cmd-tag">disablecommand</span>
+            <span class="cmd-tag">restrictcommand</span>
+            <span class="cmd-tag">pingonjoin</span>
+            <span class="cmd-tag">booster perks</span>
+            <span class="cmd-tag">serveravatar</span>
+            <span class="cmd-tag">serverbanner</span>
+            <span class="cmd-tag">membercount</span>
+            <span class="cmd-tag">emojis</span>
+            <span class="cmd-tag">roles</span>
+            <span class="cmd-tag">roleinfo</span>
+            <span class="cmd-tag">inrole</span>
+            <span class="cmd-tag">invitelookup</span>
+            <span class="cmd-tag">joined</span>
+            <span class="cmd-tag">recentjoin</span>
+            <span class="cmd-tag">guildtag</span>
+            <span class="cmd-tag">editsnipe</span>
+            <span class="cmd-tag">reactionsnipe</span>
+            <span class="cmd-tag">clearsnipe</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-lastfm">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="15.5" r="2.5"/><path d="M8 17V5l12-2v12"/></svg></div>
+            <h3>Last.fm Integration</h3>
+            <span class="cat-count">11 commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">nowplaying</div><div class="cmd-desc">Show current track</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lastfm collage</div><div class="cmd-desc">Album art grid</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lastfm topartists</div><div class="cmd-desc">Your top artists</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lastfm stats</div><div class="cmd-desc">Listening statistics</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lastfm plays</div><div class="cmd-desc">Track play count</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">lastfm recent</div><div class="cmd-desc">Recent listening history</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">lastfm connect</span>
+            <span class="cmd-tag">lastfm disconnect</span>
+            <span class="cmd-tag">lastfm autoplay</span>
+            <span class="cmd-tag">lastfm private</span>
+            <span class="cmd-tag">lastfm public</span>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tab-panel" id="tab-roleplay">
+        <div class="cat-card">
+          <div class="cat-card-head">
+            <div class="cat-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+            <h3>Roleplay & Reactions</h3>
+            <span class="cat-count">75+ commands</span>
+          </div>
+          <div class="featured-cmds">
+            <div class="featured-cmd"><div><div class="cmd-name">hug</div><div class="cmd-desc">Hug someone</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">kiss</div><div class="cmd-desc">Kiss someone</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">cuddle</div><div class="cmd-desc">Cuddle someone</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">slap</div><div class="cmd-desc">Slap someone</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">dance</div><div class="cmd-desc">Show off moves</div></div></div>
+            <div class="featured-cmd"><div><div class="cmd-name">pat</div><div class="cmd-desc">Pat someone</div></div></div>
+          </div>
+          <div class="more-cmds">
+            <span class="cmd-tag">bite</span>
+            <span class="cmd-tag">bonk</span>
+            <span class="cmd-tag">punch</span>
+            <span class="cmd-tag">tickle</span>
+            <span class="cmd-tag">poke</span>
+            <span class="cmd-tag">wave</span>
+            <span class="cmd-tag">wink</span>
+            <span class="cmd-tag">cry</span>
+            <span class="cmd-tag">blush</span>
+            <span class="cmd-tag">lick</span>
+            <span class="cmd-tag">love</span>
+            <span class="cmd-tag">nuzzle</span>
+            <span class="cmd-tag">highfive</span>
+            <span class="cmd-tag">handhold</span>
+            <span class="cmd-tag">feed</span>
+            <span class="cmd-tag">happy</span>
+            <span class="cmd-tag">laugh</span>
+            <span class="cmd-tag">nom</span>
+            <span class="cmd-tag">yeet</span>
+            <span class="cmd-tag">smug</span>
+            <span class="cmd-tag">stare</span>
+            <span class="cmd-tag">think</span>
+            <span class="cmd-tag">run</span>
+            <span class="cmd-tag">sleep</span>
+            <span class="cmd-tag">smile</span>
+            <span class="cmd-tag">pout</span>
+            <span class="cmd-tag">shrug</span>
+            <span class="cmd-tag">nod</span>
+            <span class="cmd-tag">baka</span>
+            <span class="cmd-tag">cookie</span>
+            <span class="cmd-tag">facepalm</span>
+            <span class="cmd-tag">yawn</span>
+            <span class="cmd-tag">airkiss</span>
+            <span class="cmd-tag">brofist</span>
+            <span class="cmd-tag">celebrate</span>
+            <span class="cmd-tag">cheers</span>
+            <span class="cmd-tag">clap</span>
+            <span class="cmd-tag">confused</span>
+            <span class="cmd-tag">shy</span>
+            <span class="cmd-tag">sip</span>
+            <span class="cmd-tag">sorry</span>
+            <span class="cmd-tag">surprised</span>
+            <span class="cmd-tag">+ many more</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="premium-section reveal">
+    <div class="premium-card">
+      <span class="kicker">Premium</span>
+      <h2>Unlock the full experience</h2>
+      <p>Get higher limits, exclusive features, priority support, and early access to new commands with Aiko Premium.</p>
+      <div class="premium-perks">
+        <div class="premium-perk"><span class="check">&#10003;</span> Exclusive commands</div>
+        <div class="premium-perk"><span class="check">&#10003;</span> Priority support</div>
+        <div class="premium-perk"><span class="check">&#10003;</span> Early access</div>
+      </div>
+      <a href="https://aiko.best/premium" class="btn btn-primary" style="position:relative;">Explore Premium</a>
+    </div>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h4>Aiko</h4>
+      <p>The all-in-one Discord bot trusted by thousands of communities. 440+ commands and growing every week.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Product</h5>
+      <a href="https://discord.com/oauth2/authorize?client_id=1236831177868836875">Add to Server</a>
+      <a href="https://aiko.best/commands">Commands</a>
+      <a href="https://aiko.best/dashboard">Dashboard</a>
+      <a href="https://aiko.best/premium">Premium</a>
+    </div>
+    <div class="footer-col">
+      <h5>Resources</h5>
+      <a href="https://discord.gg/2Jb6bNFcvz">Support Server</a>
+      <a href="https://top.gg/bot/1236831177868836875/vote">Vote on Top.gg</a>
+      <a href="https://aiko.best">Website</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Aiko. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  const counters = document.querySelectorAll('.counter');
+  let countersStarted = false;
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !countersStarted) {
+        countersStarted = true;
+        counters.forEach(c => {
+          const target = parseInt(c.dataset.target);
+          const duration = 2000;
+          const start = performance.now();
+          const step = (now) => {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            c.textContent = Math.floor(eased * target).toLocaleString();
+            if (progress < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      els.forEach(function(el) { observer.observe(el); });
-    })();
-  </script>
+      }
+    });
+  }, { threshold: 0.3 });
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) counterObserver.observe(statsBar);
+
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('tab-' + tab);
+      if (panel) {
+        panel.classList.add('active');
+        panel.style.animation = 'none';
+        panel.offsetHeight;
+        panel.style.animation = '';
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
