@@ -155,8 +155,24 @@
     revealEls.forEach(function (el) { el.classList.add('visible'); });
   }
 
+  function setupBackToTop() {
+    var btn = document.getElementById('backToTop');
+    if (!btn) return;
+    var threshold = 400;
+    function update() {
+      if (window.pageYOffset > threshold) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    update();
+  }
+
   function init() {
     setupReveal();
+    setupBackToTop();
     fetch('commands.json', { cache: 'no-cache' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function (data) {
