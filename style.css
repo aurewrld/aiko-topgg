@@ -711,3 +711,40 @@
     .cmd-badge.prime { color: #fff; background: linear-gradient(135deg, #a78bfa, #6d28d9); box-shadow: 0 2px 8px rgba(167, 139, 250, 0.3); }
     .cmd-empty { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-dim); font-size: 0.9rem; }
     @media (max-width: 768px) { .cmd-grid { grid-template-columns: 1fr; } }
+
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8a0040, #ff6cf5);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(138, 0, 64, 0.4), 0 0 0 1px rgba(255, 108, 245, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.85);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.3s, box-shadow 0.25s;
+}
+.back-to-top svg { width: 22px; height: 22px; }
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.back-to-top:hover {
+  box-shadow: 0 10px 30px rgba(138, 0, 64, 0.55), 0 0 0 2px rgba(255, 108, 245, 0.35);
+  transform: translateY(-2px) scale(1.05);
+}
+.back-to-top:active { transform: translateY(0) scale(0.95); }
+@media (max-width: 480px) {
+  .back-to-top { bottom: 18px; right: 18px; width: 42px; height: 42px; }
+  .back-to-top svg { width: 18px; height: 18px; }
+}
